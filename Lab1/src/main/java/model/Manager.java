@@ -6,12 +6,12 @@ import java.util.List;
 public class Manager extends User {
     private List<Cart> cartList;
 
-    public Manager(int id, String username, String password, String name, String surname, LocalDate birthDate) {
-        super(id, username, password, name, surname, birthDate);
+    public Manager(int id, String username, String password, String name, String surname, String gmail, LocalDate birthDate) {
+        super(id, username, password, name, surname, gmail, birthDate);
     }
 
-    public Manager(int id, String username, String password, String name, String surname, LocalDate birthDate, List<Cart> cartList) {
-        super(id, username, password, name, surname, birthDate);
+    public Manager(int id, String username, String password, String name, String surname, String gmail, LocalDate birthDate, List<Cart> cartList) {
+        super(id, username, password, name, surname, gmail, birthDate);
         this.cartList = cartList;
     }
 

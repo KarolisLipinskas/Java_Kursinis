@@ -8,14 +8,14 @@ public class Customer extends User {
     private String cardNo;
     private List<Cart> cartList;
 
-    public Customer(int id, String username, String password, String name, String surname, LocalDate birthDate, String cardNo) {
-        super(id, username, password, name, surname, birthDate);
+    public Customer(int id, String username, String password, String name, String surname, String gmail, LocalDate birthDate, String cardNo) {
+        super(id, username, password, name, surname, gmail, birthDate);
         this.cardNo = cardNo;
         this.cartList = new ArrayList<>();
     }
 
-    public Customer(int id, String username, String password, String name, String surname, LocalDate birthDate, String cardNo, List<Cart> cartList) {
-        super(id, username, password, name, surname, birthDate);
+    public Customer(int id, String username, String password, String name, String surname, String gmail, LocalDate birthDate, String cardNo, List<Cart> cartList) {
+        super(id, username, password, name, surname, gmail, birthDate);
         this.cardNo = cardNo;
         this.cartList = cartList;
     }
@@ -48,6 +48,7 @@ public class Customer extends User {
                 ", password='" + password + '\'' +
                 ", name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
+                ", gmail='" + gmail + '\'' +
                 ", birthDate=" + birthDate +
                 ", cartList=" + cartList +
                 '}';

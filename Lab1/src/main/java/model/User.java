@@ -8,14 +8,16 @@ public abstract class User {
     protected String password;
     protected String name;
     protected String surname;
+    protected String gmail;
     protected LocalDate birthDate;
 
-    public User(int id, String username, String password, String name, String surname, LocalDate birthDate) {
+    public User(int id, String username, String password, String name, String surname, String gmail, LocalDate birthDate) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.name = name;
         this.surname = surname;
+        this.gmail = gmail;
         this.birthDate = birthDate;
     }
 
@@ -57,6 +59,14 @@ public abstract class User {
 
     public void setSurname(String surname) {
         this.surname = surname;
+    }
+
+    public String getGmail() {
+        return gmail;
+    }
+
+    public void setGmail(String gmail) {
+        this.gmail = gmail;
     }
 
     public LocalDate getBirthDate() {
