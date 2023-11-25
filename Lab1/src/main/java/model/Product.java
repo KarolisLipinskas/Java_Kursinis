@@ -1,25 +1,40 @@
 package model;
 
+import org.hibernate.Hibernate;
+
+import javax.persistence.*;
+import java.util.List;
+import java.util.Map;
+
+@Entity
 public class Product {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
+    private String type;
     private double price;
     private int warrantyYears;
-    private Review review;
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "product")
+    @OrderBy("rating")
+    private List<Review> reviews;
 
-    public Product(int id, String name, double price, int warrantyYears) {
-        this.id = id;
+    public Product() {
+    }
+
+    public Product(String name, String type, double price, int warrantyYears) {
         this.name = name;
+        this.type = type;
         this.price = price;
         this.warrantyYears = warrantyYears;
     }
 
-    public Product(int id, String name, double price, int warrantyYears, Review review) {
-        this.id = id;
+    public Product(String name, String type, double price, int warrantyYears, List<Review> reviews) {
         this.name = name;
+        this.type = type;
         this.price = price;
         this.warrantyYears = warrantyYears;
-        this.review = review;
+        this.reviews = reviews;
     }
 
     public int getId() {
@@ -38,6 +53,14 @@ public class Product {
         this.name = name;
     }
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
     public double getPrice() {
         return price;
     }
@@ -54,22 +77,31 @@ public class Product {
         this.warrantyYears = warrantyYears;
     }
 
-    public Review getReview() {
-        return review;
+    public List<Review> getReviews() {
+        return reviews;
     }
 
-    public void setReview(Review review) {
-        this.review = review;
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
     }
 
     @Override
     public String toString() {
+        String r = "{";
+        if (reviews.isEmpty()) r += "null";
+        else {
+            for (Review review : reviews) {
+                r += review + ", ";
+            }
+        }
+        r += "}";
         return "Product{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", type='" + type + '\'' +
                 ", price=" + price +
                 ", warrantyYears=" + warrantyYears +
-                ", review=" + review +
+                ", reviews=" + r +
                 '}';
     }
 }
