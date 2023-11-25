@@ -1,8 +1,15 @@
 package model;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.time.LocalDate;
 
+@Entity
 public abstract class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected int id;
     protected String username;
     protected String password;
@@ -11,8 +18,20 @@ public abstract class User {
     protected String gmail;
     protected LocalDate birthDate;
 
+    public User() {
+    }
+
     public User(int id, String username, String password, String name, String surname, String gmail, LocalDate birthDate) {
         this.id = id;
+        this.username = username;
+        this.password = password;
+        this.name = name;
+        this.surname = surname;
+        this.gmail = gmail;
+        this.birthDate = birthDate;
+    }
+
+    public User(String username, String password, String name, String surname, String gmail, LocalDate birthDate) {
         this.username = username;
         this.password = password;
         this.name = name;

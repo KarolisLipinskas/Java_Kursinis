@@ -1,23 +1,35 @@
 package model;
 
+import javax.persistence.Entity;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
 public class Customer extends User {
     private String cardNo;
-    private List<Cart> cartList;
+    //private List<Cart> cartList;    // kazkaip sutvarkyti
+
+
+    public Customer() {
+    }
 
     public Customer(int id, String username, String password, String name, String surname, String gmail, LocalDate birthDate, String cardNo) {
         super(id, username, password, name, surname, gmail, birthDate);
         this.cardNo = cardNo;
-        this.cartList = new ArrayList<>();
+        //this.cartList = new ArrayList<>();
+    }
+
+    public Customer(String username, String password, String name, String surname, String gmail, LocalDate birthDate, String cardNo) {
+        super(username, password, name, surname, gmail, birthDate);
+        this.cardNo = cardNo;
+        //this.cartList = new ArrayList<>();
     }
 
     public Customer(int id, String username, String password, String name, String surname, String gmail, LocalDate birthDate, String cardNo, List<Cart> cartList) {
         super(id, username, password, name, surname, gmail, birthDate);
         this.cardNo = cardNo;
-        this.cartList = cartList;
+        //this.cartList = cartList;
     }
 
     public String getCardNo() {
@@ -28,7 +40,7 @@ public class Customer extends User {
         this.cardNo = cardNo;
     }
 
-    public List<Cart> getCartList() {
+    /*public List<Cart> getCartList() {
         return cartList;
     }
 
@@ -37,7 +49,7 @@ public class Customer extends User {
     }
     public void addCart(Cart cart) {
         this.cartList.add(cart);
-    }
+    }*/
 
     @Override
     public String toString() {
@@ -50,7 +62,7 @@ public class Customer extends User {
                 ", surname='" + surname + '\'' +
                 ", gmail='" + gmail + '\'' +
                 ", birthDate=" + birthDate +
-                ", cartList=" + cartList +
+                //", cartList=" + cartList +
                 '}';
     }
 }

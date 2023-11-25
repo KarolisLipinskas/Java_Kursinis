@@ -1,10 +1,19 @@
 package model.controllers;
 
 import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.stage.Stage;
 import model.Customer;
+import model.HibernateCustomer;
+import model.HibernateEmployee;
 
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
@@ -22,15 +31,26 @@ public class LoginController implements Initializable {
     public TextField birthdate;
     public TextField cardNo;
 
+    EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("kl_kursinis");
+    HibernateCustomer hibernateCustomer = new HibernateCustomer(entityManagerFactory);
+
+    public void createNewCustomer() {
+        if (!checkInput()) return;
+        Customer customer = new Customer(
+                registerName.getText(),
+                registerPass.getText(),
+                name.getText(),
+                surname.getText(),
+                gmail.getText(),
+                LocalDate.parse(birthdate.getText()),
+                cardNo.getText());
+
+        hibernateCustomer.create(customer);
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         System.out.println("Nice");
-    }
-
-    public void createNewUser(ActionEvent actionEvent) {
-        if (!checkInput()) return;
-        Customer customer = new Customer(1, registerName.getText(), registerPass.getText(), name.getText(), surname.getText(), gmail.getText(), LocalDate.parse(birthdate.getText()), cardNo.getText());
-        System.out.println(customer);
     }
 
     private boolean checkInput() {
@@ -39,7 +59,7 @@ public class LoginController implements Initializable {
             check = false;
             System.out.println("Passwords do not mach");
         }
-        if (!Pattern.matches(".+@.+\\..+", gmail.getText())) { //pakeisti
+        if (!Pattern.matches(".+@.+\\..+", gmail.getText())) {
             check = false;
             System.out.println("Wrong gmail");
         }
@@ -50,13 +70,27 @@ public class LoginController implements Initializable {
         return check;
     }
 
-    public void login(ActionEvent actionEvent) {
-        Customer customer = new Customer(1, "C1", "Pass", "Name", "Surname", "1@gmail.com", LocalDate.parse("2020-01-01"), "1111");
-        if (loginName.getText().equals(customer.getUsername()) && loginPass.getText().equals(customer.getPassword())) {
+    public void login(ActionEvent actionEvent) throws IOException {
+        if (hibernateCustomer.checkCustomer(loginName.getText(), loginPass.getText())) {
             System.out.println("Successfully logged in");
+
+            openMainWindow();
+
+            Stage stage = (Stage) loginName.getScene().getWindow();
+            stage.close();
         }
         else {
             System.out.println("Wrong username or password");
         }
+    }
+
+    public void openMainWindow() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxml/main.fxml"));
+        Parent root = loader.load();
+
+        Stage mainWindow = new Stage();
+        mainWindow.setTitle("Main page");
+        mainWindow.setScene(new Scene(root));
+        mainWindow.show();
     }
 }

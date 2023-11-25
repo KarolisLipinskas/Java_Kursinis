@@ -22,7 +22,7 @@
       <TextField fx:id="registerName" layoutX="339.0" layoutY="66.0" prefHeight="25.0" prefWidth="155.0" promptText="nickname" />
       <PasswordField fx:id="registerPassR" layoutX="340.0" layoutY="149.0" prefHeight="25.0" prefWidth="155.0" promptText="repeat password" />
       <Button layoutX="141.0" layoutY="155.0" mnemonicParsing="false" onAction="#login" text="Login" />
-      <Button layoutX="387.0" layoutY="391.0" mnemonicParsing="false" onAction="#createNewUser" text="Register" />
+      <Button layoutX="387.0" layoutY="391.0" mnemonicParsing="false" onAction="#createNewCustomer" text="Register" />
       <TextField fx:id="name" layoutX="340.0" layoutY="190.0" prefHeight="25.0" prefWidth="155.0" promptText="first name" />
       <TextField fx:id="surname" layoutX="339.0" layoutY="232.0" prefHeight="25.0" prefWidth="155.0" promptText="last name" />
       <TextField fx:id="birthdate" layoutX="339.0" layoutY="307.0" prefHeight="25.0" prefWidth="155.0" promptText="birth date (YYYY-MM-DD)" />

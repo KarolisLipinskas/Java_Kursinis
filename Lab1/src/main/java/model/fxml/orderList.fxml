@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="model.controllers.OrderListController">
+   <children>
+       <MenuBar layoutX="6.0" layoutY="8.0">
+           <menus>
+               <Menu mnemonicParsing="false" text="Main page">
+                   <items>
+                       <MenuItem mnemonicParsing="false" onAction="#openMainWindow" text="Open" />
+                   </items></Menu>
+               <Menu mnemonicParsing="false" text="Cart">
+                   <items>
+                       <MenuItem mnemonicParsing="false" onAction="#openCartWindow" text="Open" />
+                   </items></Menu>
+               <Menu mnemonicParsing="false" text="Account">
+                   <items>
+                       <MenuItem mnemonicParsing="false" onAction="#openSettingsWindow" text="Settings" />
+                       <MenuItem mnemonicParsing="false" text="Order history" />
+                       <SeparatorMenuItem mnemonicParsing="false" />
+                       <MenuItem mnemonicParsing="false" onAction="#logout" text="Logout" />
+                   </items>
+               </Menu>
+           </menus>
+       </MenuBar>
+      <TableView fx:id="table" layoutX="22.0" layoutY="79.0" prefHeight="309.0" prefWidth="422.0">
+        <columns>
+          <TableColumn prefWidth="74.0" text="Order id" />
+          <TableColumn prefWidth="94.0" text="Price" />
+            <TableColumn prefWidth="137.0" />
+            <TableColumn prefWidth="116.0" text="Status" />
+        </columns>
+      </TableView>
+      <Text layoutX="22.0" layoutY="74.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Order list:">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Text>
+      <Button layoutX="484.0" layoutY="175.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="74.0" text="View order" />
+   </children>
+</AnchorPane>
