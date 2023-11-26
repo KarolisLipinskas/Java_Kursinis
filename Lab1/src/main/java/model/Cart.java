@@ -1,25 +1,47 @@
 package model;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
 public class Cart {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String status;
+    private double price;
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "cart")
+    //@OrderBy("id")
     private List<Product> products;
-    private Comment comment;
+    @OneToOne(mappedBy = "cart")
+    private CartComment cartComment;
+    @ManyToOne
+    private Customer customer;
 
-    public Cart(int id) {
-        this.id = id;
-        this.status = "newCart";
-        this.products = new ArrayList<>();
+    public Cart() {
     }
 
-    public Cart(int id, String status, List<Product> products, Comment comment) {
+    public Cart(String status, Customer customer) {
+        this.status = status;
+        this.products = new ArrayList<>();
+        this.customer = customer;
+    }
+
+    public Cart(int id, String status, double price, List<Product> products, CartComment cartComment) {
         this.id = id;
         this.status = status;
+        this.price = price;
         this.products = products;
-        this.comment = comment;
+        this.cartComment = cartComment;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getStatus() {
@@ -30,6 +52,14 @@ public class Cart {
         this.status = status;
     }
 
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
     public List<Product> getProducts() {
         return products;
     }
@@ -38,16 +68,46 @@ public class Cart {
         this.products = products;
     }
 
-    public Comment getComment() {
-        return comment;
+    public CartComment getCartComment() {
+        return cartComment;
     }
 
-    public void setComment(Comment comment) {
-        this.comment = comment;
+    public void setCartComment(CartComment cartComment) {
+        this.cartComment = cartComment;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 
     public void addProduct(Product product) {
         this.products.add(product);
+    }
+
+    public void removeProduct(Product product) {
+        this.products.remove(product);
+    }
+
+    public void updateCart(Cart cart) {
+        this.setStatus(cart.getStatus());
+        this.setPrice(cart.getPrice());
+        this.setProducts(cart.getProducts());
+        this.setCartComment(cart.getCartComment());
+    }
+
+    public void removeCart(HibernateCart hibernateCart, HibernateProduct hibernateProduct) {
+        removeAllItems(hibernateProduct);
+        //...
+    }
+
+    public void removeAllItems(HibernateProduct hibernateProduct) {
+        for (Product product : products) {
+            hibernateProduct.delete(product);
+        }
     }
 
     @Override
@@ -55,8 +115,9 @@ public class Cart {
         return "Cart{" +
                 "id=" + id +
                 ", status='" + status + '\'' +
+                ", price='" + price + '\'' +
                 ", products=" + products +
-                ", comment=" + comment +
+                ", comment=" + cartComment +
                 '}';
     }
 }

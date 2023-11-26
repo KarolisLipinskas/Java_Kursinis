@@ -22,25 +22,70 @@ public class SettingsController implements Initializable {
     public Label loginName;
     public Label loginPass;
 
+    public Label customerId;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         System.out.println("Settings page");
     }
 
+    public void initData(String id) {
+        customerId.setText(id);
+        System.out.println(customerId);
+    }
+
     public void openMainWindow(ActionEvent actionEvent) throws IOException {
-        openWindow("../fxml/main.fxml", "Main page");
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxml/main.fxml"));
+        Stage mainWindow = getStage(loader, "Main page");
+
+        MainController mainController = loader.getController();
+        mainController.initData(customerId.getText());
+
+        mainWindow.show();
+        closeStage();
     }
 
     public void openCartWindow(ActionEvent actionEvent) throws IOException {
-        openWindow("../fxml/cart.fxml", "Cart page");
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxml/cart.fxml"));
+        Stage cartWindow = getStage(loader, "Cart page");
+
+        CartController cartController = loader.getController();
+        cartController.initData(customerId.getText());
+
+        cartWindow.show();
+        closeStage();
     }
 
     public void openOrderListWindow(ActionEvent actionEvent) throws IOException {
-        openWindow("../fxml/orderList.fxml", "Order history page");
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxml/orderList.fxml"));
+        Stage orderListWindow = getStage(loader, "Order history page");
+
+        OrderListController orderListController = loader.getController();
+        orderListController.initData(customerId.getText());
+
+        orderListWindow.show();
+        closeStage();
     }
 
     public void logout(ActionEvent actionEvent) throws IOException {
-        openWindow("../fxml/login.fxml", "Login screen");
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxml/login.fxml"));
+        Stage cartWindow = getStage(loader, "Login screen");
+
+        cartWindow.show();
+        closeStage();
+    }
+
+    public Stage getStage(FXMLLoader loader ,String title) throws IOException {
+        Parent root = loader.load();
+        Stage window = new Stage();
+        window.setTitle(title);
+        window.setScene(new Scene(root));
+        return window;
+    }
+
+    public void closeStage() {
+        Stage stage = (Stage) name.getScene().getWindow();
+        stage.close();
     }
 
     public void openWindow(String path, String title) throws IOException {

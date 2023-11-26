@@ -71,10 +71,11 @@ public class LoginController implements Initializable {
     }
 
     public void login(ActionEvent actionEvent) throws IOException {
-        if (hibernateCustomer.checkCustomer(loginName.getText(), loginPass.getText())) {
+        Customer customer = hibernateCustomer.getCustomer(loginName.getText(), loginPass.getText());
+        if (customer != null) {
             System.out.println("Successfully logged in");
 
-            openMainWindow();
+            openMainWindow(customer);
 
             Stage stage = (Stage) loginName.getScene().getWindow();
             stage.close();
@@ -84,13 +85,17 @@ public class LoginController implements Initializable {
         }
     }
 
-    public void openMainWindow() throws IOException {
+    public void openMainWindow(Customer customer) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxml/main.fxml"));
         Parent root = loader.load();
 
         Stage mainWindow = new Stage();
         mainWindow.setTitle("Main page");
         mainWindow.setScene(new Scene(root));
+
+        MainController mainController = loader.getController();
+        mainController.initData(Integer.toString(customer.getId()));
+
         mainWindow.show();
     }
 }

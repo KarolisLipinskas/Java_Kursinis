@@ -1,10 +1,7 @@
 package model;
 
-import org.hibernate.Hibernate;
-
 import javax.persistence.*;
 import java.util.List;
-import java.util.Map;
 
 @Entity
 public class Product {
@@ -18,6 +15,8 @@ public class Product {
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "product")
     @OrderBy("rating")
     private List<Review> reviews;
+    @ManyToOne
+    private Cart cart;
 
     public Product() {
     }
@@ -27,6 +26,14 @@ public class Product {
         this.type = type;
         this.price = price;
         this.warrantyYears = warrantyYears;
+    }
+
+    public Product(Product product, Cart cart) {
+        this.name = product.getName();
+        this.type = product.getType();
+        this.price = product.getPrice();
+        this.warrantyYears = product.getWarrantyYears();
+        this.cart = cart;
     }
 
     public Product(String name, String type, double price, int warrantyYears, List<Review> reviews) {
@@ -83,6 +90,26 @@ public class Product {
 
     public void setReviews(List<Review> reviews) {
         this.reviews = reviews;
+    }
+
+    public Cart getCart() {
+        return cart;
+    }
+
+    public void setCart(Cart cart) {
+        this.cart = cart;
+    }
+
+    public void updateProduct(Product product) {
+        this.setName(product.getName());
+        this.setType(product.getType());
+        this.setPrice(product.getPrice());
+        this.setWarrantyYears(product.getWarrantyYears());
+        this.setReviews(product.getReviews());
+    }
+
+    public void removeProduct(HibernateProduct hibernateProduct) {
+        //...
     }
 
     @Override

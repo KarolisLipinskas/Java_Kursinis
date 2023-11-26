@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="model.controllers.OrderListController">
+<AnchorPane prefHeight="400.0" prefWidth="677.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="model.controllers.OrderListController">
    <children>
        <MenuBar layoutX="6.0" layoutY="8.0">
            <menus>
@@ -26,12 +26,12 @@
                </Menu>
            </menus>
        </MenuBar>
-      <TableView fx:id="table" layoutX="22.0" layoutY="79.0" prefHeight="309.0" prefWidth="422.0">
+      <TableView fx:id="table" layoutX="22.0" layoutY="79.0" prefHeight="309.0" prefWidth="466.0">
         <columns>
-          <TableColumn prefWidth="74.0" text="Order id" />
-          <TableColumn prefWidth="94.0" text="Price" />
-            <TableColumn prefWidth="137.0" />
-            <TableColumn prefWidth="116.0" text="Status" />
+          <TableColumn fx:id="order_id" prefWidth="86.0" text="Order id" />
+          <TableColumn fx:id="price" prefWidth="113.0" text="Price" />
+            <TableColumn prefWidth="128.0" />
+            <TableColumn fx:id="status" prefWidth="138.0" text="Status" />
         </columns>
       </TableView>
       <Text layoutX="22.0" layoutY="74.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Order list:">
@@ -39,6 +39,7 @@
             <Font size="20.0" />
          </font>
       </Text>
-      <Button layoutX="484.0" layoutY="175.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="74.0" text="View order" />
+      <Button layoutX="541.0" layoutY="175.0" mnemonicParsing="false" onAction="#viewOrder" prefHeight="50.0" prefWidth="74.0" text="View order" />
+      <Label fx:id="customerId" layoutX="436.0" layoutY="25.0" text="id" visible="false" />
    </children>
 </AnchorPane>

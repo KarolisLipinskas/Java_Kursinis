@@ -34,6 +34,47 @@ public class HibernateProduct {
         }
     }
 
+    public void update(Product product) {
+        EntityManager em = null;
+        try {
+            em = getEntityManager();
+            em.getTransaction().begin();
+
+            Product foundProduct = em.find(Product.class, product.getId());
+            foundProduct.updateProduct(product);
+            em.merge(foundProduct);
+
+            em.getTransaction().commit();
+            System.out.println("updated product");  //delete
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+    }
+
+    public void delete(Product product) {
+        EntityManager em = null;
+        try {
+            em = getEntityManager();
+            em.getTransaction().begin();
+
+            Product foundProduct = em.find(Product.class, product.getId());
+            em.remove(foundProduct);
+
+            em.getTransaction().commit();
+            System.out.println("deleted product");  //delete
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+    }
+
     public List<Product> getAllProducts() {
         EntityManager em = getEntityManager();
         try {

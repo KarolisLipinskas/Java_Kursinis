@@ -6,10 +6,10 @@ import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaQuery;
 import java.util.List;
 
-public class HibernateCustomer {
+public class HibernateCart {
     private EntityManagerFactory emf = null;
 
-    public HibernateCustomer(EntityManagerFactory entityManagerFactory) {
+    public HibernateCart(EntityManagerFactory entityManagerFactory) {
         this.emf = entityManagerFactory;
     }
 
@@ -17,14 +17,14 @@ public class HibernateCustomer {
         return emf.createEntityManager();
     }
 
-    public void create(Customer customer) {
+    public void create(Cart cart) {
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            em.persist(em.merge(customer));
+            em.persist(em.merge(cart));
             em.getTransaction().commit();
-            System.out.println("created customer");  //delete
+            System.out.println("created cart");  //delete
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -34,18 +34,18 @@ public class HibernateCustomer {
         }
     }
 
-    public void update(Customer customer) {
+    public void update(Cart cart) {
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
 
-            Customer foundCustomer = em.find(Customer.class, customer.getId());
-            foundCustomer.updateCustomer(customer);
-            em.merge(foundCustomer);
+            Cart foundCart = em.find(Cart.class, cart.getId());
+            foundCart.updateCart(cart);
+            em.merge(foundCart);
 
             em.getTransaction().commit();
-            System.out.println("updated customer");  //delete
+            System.out.println("updated cart");  //delete
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -55,11 +55,32 @@ public class HibernateCustomer {
         }
     }
 
-    public List<Customer> getAllCustomers() {
+    public void delete(Cart cart, HibernateProduct hibernateProduct) {
+        EntityManager em = null;
+        try {
+            em = getEntityManager();
+            em.getTransaction().begin();
+
+            cart.removeAllItems(hibernateProduct);
+            Cart foundCart = em.find(Cart.class, cart.getId());
+            em.remove(foundCart);
+
+            em.getTransaction().commit();
+            System.out.println("created cart");  //delete
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+    }
+
+    public List<Cart> getAllCarts() {
         EntityManager em = getEntityManager();
         try {
             CriteriaQuery criteriaQuery = em.getCriteriaBuilder().createQuery();
-            criteriaQuery.select(criteriaQuery.from(Customer.class));
+            criteriaQuery.select(criteriaQuery.from(Cart.class));
             Query query = em.createQuery(criteriaQuery);
             return query.getResultList();
         } catch (Exception e) {
@@ -72,20 +93,9 @@ public class HibernateCustomer {
         return null;
     }
 
-    public Customer getCustomer(String loginName, String loginPass) {
+    public Cart getCart(String id) {
         EntityManager em = getEntityManager();
-        for (Customer e : getAllCustomers()) {
-            System.out.println(e.toString());   //delete
-            System.out.println(e.getClass().getName().substring(e.getClass().getName().lastIndexOf('.') + 1));
-            if (e.getUsername().equals(loginName) && e.getPassword().equals(loginPass)) return e;
-        }
-        em.close();
-        return null;
-    }
-
-    public Customer getCustomer(String id) {
-        EntityManager em = getEntityManager();
-        for (Customer e : getAllCustomers()) {
+        for (Cart e : getAllCarts()) {
             if (Integer.toString(e.getId()).equals(id)) return e;
         }
         em.close();

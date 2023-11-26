@@ -94,5 +94,6 @@
          </font>
       </Button>
       <Button layoutX="41.0" layoutY="339.0" mnemonicParsing="false" text="Delete account" />
+      <Label fx:id="customerId" layoutX="467.0" layoutY="33.0" text="id" visible="false" />
    </children>
 </AnchorPane>
