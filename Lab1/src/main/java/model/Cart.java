@@ -92,16 +92,20 @@ public class Cart {
         this.products.remove(product);
     }
 
-    public void updateCart(Cart cart) {
+    public void update(Cart cart) {
         this.setStatus(cart.getStatus());
         this.setPrice(cart.getPrice());
         this.setProducts(cart.getProducts());
         this.setCartComment(cart.getCartComment());
     }
 
+    public void updateCart(HibernateCart hibernateCart) {
+        hibernateCart.update(this);
+    }
+
     public void removeCart(HibernateCart hibernateCart, HibernateProduct hibernateProduct) {
         removeAllItems(hibernateProduct);
-        //...
+        hibernateCart.delete(this);
     }
 
     public void removeAllItems(HibernateProduct hibernateProduct) {

@@ -54,7 +54,7 @@ public class Customer extends User {
         this.cartList.add(cart);
     }
 
-    public void updateCustomer(Customer customer) {
+    public void update(Customer customer) {
         this.setUsername(customer.getUsername());
         this.setPassword(customer.getPassword());
         this.setName(customer.getName());
@@ -65,13 +65,19 @@ public class Customer extends User {
         this.setCartList(customer.getCartList());
     }
 
+    public void updateCustomer(HibernateCustomer hibernateCustomer) {
+        hibernateCustomer.update(this);
+    }
+
     public void removeCustomer(HibernateCustomer hibernateCustomer, HibernateCart hibernateCart, HibernateProduct hibernateProduct) {
         removeAllCarts(hibernateCart, hibernateProduct);
-        //...
+        hibernateCustomer.delete(this);
     }
 
     public void removeAllCarts(HibernateCart hibernateCart, HibernateProduct hibernateProduct) {
-        //...
+        for (Cart cart : cartList) {
+            cart.removeCart(hibernateCart, hibernateProduct);
+        }
     }
 
     @Override

@@ -34,6 +34,9 @@ public class LoginController implements Initializable {
     EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("kl_kursinis");
     HibernateCustomer hibernateCustomer = new HibernateCustomer(entityManagerFactory);
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) { }
+
     public void createNewCustomer() {
         if (!checkInput()) return;
         Customer customer = new Customer(
@@ -46,42 +49,107 @@ public class LoginController implements Initializable {
                 cardNo.getText());
 
         hibernateCustomer.create(customer);
-    }
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        System.out.println("Nice");
+        registerName.clear();
+        registerPass.clear();
+        registerPassR.clear();
+        name.clear();
+        surname.clear();
+        gmail.clear();
+        birthdate.clear();
+        cardNo.clear();
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setContentText("Account created");
+        alert.show();
     }
 
     private boolean checkInput() {
         boolean check = true;
-        if (!registerPass.getText().equals(registerPassR.getText())) {
+        String alertText = "";
+
+        if (registerName.getText().isEmpty()) {   //nickname check
             check = false;
-            System.out.println("Passwords do not mach");
+            alertText += "- no nickname\n";
         }
-        if (!Pattern.matches(".+@.+\\..+", gmail.getText())) {
+        else {
+            for (Customer customer : hibernateCustomer.getAllCustomers()) {
+                if (registerName.getText().equals(customer.getUsername())) {
+                    check = false;
+                    alertText += "- nickname already exist\n";
+                    break;
+                }
+            }
+        }
+
+        if (registerPass.getText().isEmpty()) {    //password check
             check = false;
-            System.out.println("Wrong gmail");
+            alertText += "- no password\n";
         }
-        if (!Pattern.matches("[0-9]{4}-[0-9]{2}-[0-9]{2}", birthdate.getText())) {
+        if (registerPassR.getText().isEmpty()) {
             check = false;
-            System.out.println("Wrong date");
+            alertText += "- no repeat password\n";
         }
+        if (!registerPass.getText().isEmpty() && !registerPassR.getText().isEmpty() && !registerPass.getText().equals(registerPassR.getText())) {
+            check = false;
+            alertText += "- passwords do not mach\n";
+        }
+
+        if (name.getText().isEmpty()) { //name check
+            check = false;
+            alertText += "- no name\n";
+        }
+
+        if (surname.getText().isEmpty()) { //surname check
+            check = false;
+            alertText += "- no surname\n";
+        }
+
+        if (gmail.getText().isEmpty()) {  //gmail check
+            check = false;
+            alertText += "- no gmail\n";
+        }
+        else if (!Pattern.matches(".+@.+\\..+", gmail.getText())) {
+            check = false;
+            alertText += "- wrong gmail\n";
+        }
+
+        if (birthdate.getText().isEmpty()) {   //birthdate check
+            check = false;
+            alertText += "- no birthdate\n";
+        }
+        else if (!Pattern.matches("[0-9]{4}-[0-9]{2}-[0-9]{2}", birthdate.getText())) {
+            check = false;
+            alertText += "- wrong date\n";
+        }
+
+        if (!cardNo.getText().isEmpty() && !Pattern.matches("[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{4}", cardNo.getText())) {  //cardNo check
+            check = false;
+            alertText += "- wrong cardNo\n";
+        }
+
+        //Error alert
+        if(!check) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText(alertText);
+            alert.show();
+        }
+
         return check;
     }
 
     public void login(ActionEvent actionEvent) throws IOException {
         Customer customer = hibernateCustomer.getCustomer(loginName.getText(), loginPass.getText());
         if (customer != null) {
-            System.out.println("Successfully logged in");
-
             openMainWindow(customer);
 
             Stage stage = (Stage) loginName.getScene().getWindow();
             stage.close();
         }
         else {
-            System.out.println("Wrong username or password");
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Wrong nickname or password");
+            alert.show();
         }
     }
 

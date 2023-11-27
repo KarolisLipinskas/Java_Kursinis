@@ -109,7 +109,7 @@ public class Product {
     }
 
     public void removeProduct(HibernateProduct hibernateProduct) {
-        //...
+        hibernateProduct.delete(this);
     }
 
     @Override

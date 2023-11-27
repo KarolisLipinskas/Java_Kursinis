@@ -26,7 +26,10 @@
       <TextField fx:id="name" layoutX="340.0" layoutY="190.0" prefHeight="25.0" prefWidth="155.0" promptText="first name" />
       <TextField fx:id="surname" layoutX="339.0" layoutY="232.0" prefHeight="25.0" prefWidth="155.0" promptText="last name" />
       <TextField fx:id="birthdate" layoutX="339.0" layoutY="307.0" prefHeight="25.0" prefWidth="155.0" promptText="birth date (YYYY-MM-DD)" />
-      <TextField fx:id="cardNo" layoutX="339.0" layoutY="346.0" prefHeight="25.0" prefWidth="155.0" promptText="cardNo" />
+      <TextField fx:id="cardNo" layoutX="339.0" layoutY="346.0" prefHeight="25.0" prefWidth="155.0" promptText="cardNo (xxxx-xxxx-xxxx-xxxx)">
+         <font>
+            <Font size="11.0" />
+         </font></TextField>
       <TextField fx:id="gmail" layoutX="339.0" layoutY="269.0" prefHeight="25.0" prefWidth="155.0" promptText="gmail" />
    </children>
 </AnchorPane>

@@ -3,7 +3,6 @@ package model.controllers;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
@@ -12,13 +11,13 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import model.*;
-import sample.TableParameters;
 
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.regex.Pattern;
 
 public class MainController implements Initializable {
     public TextField priceMin;
@@ -49,11 +48,9 @@ public class MainController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         types.getItems().addAll("All", "Bike", "Brakes", "Fork", "Frame", "Handlebars", "Pedals", "Shock", "Wheels");
         loadTable("All", 0.0, 999999.99);
-        System.out.println("Main page");
     }
     public void initData(String id) {
         customerId.setText(id);
-        System.out.println(customerId);
     }
 
     public void loadTable(String productType, double min, double max) {
@@ -84,7 +81,21 @@ public class MainController implements Initializable {
     }
 
     public void addToCart(ActionEvent actionEvent) {
+        if (quantityField.getText().isEmpty() || !Pattern.matches("[0-9]*", quantityField.getText()) || quantityField.getText().equals("0")) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("- wrong quantity input");
+            alert.show();
+            return;
+        }
+
         ProductTableParameters p = table.getSelectionModel().getSelectedItem();
+        if (p == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("- no item selected");
+            alert.show();
+            return;
+        }
+
         Product product = hibernateProduct.getProduct(Integer.parseInt(p.getId()));
         int quant = Integer.parseInt(quantityField.getText());
 
@@ -103,16 +114,10 @@ public class MainController implements Initializable {
             //hibernateCart.update(cart);
             hibernateProduct.create(new Product(product, cart));
         }
-        System.out.println(product);
-        System.out.println(quantityField.getText());
 
-        //-----
-        cart = getOpenCart(customer);
-        if (cart != null) {
-            for (Product product1 : cart.getProducts()) {
-                System.out.println(product1);
-            }
-        } else System.out.println("NULL");
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setContentText("Item/s added to cart");
+        alert.show();
     }
     public Cart getOpenCart(Customer customer) {
         if (customer.getCartList() == null) return null;
@@ -125,14 +130,29 @@ public class MainController implements Initializable {
     }
 
     public void filter(ActionEvent actionEvent) {
+        boolean check = true;
+        String alertText = "";
+        if (!Pattern.matches("[0-9]*", priceMin.getText())) {
+            check = false;
+            alertText += "- wrong min input\n";
+        }
+        if (!Pattern.matches("[0-9]*", priceMax.getText())) {
+            check = false;
+            alertText += "- wrong max input\n";
+        }
+        if (!check){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText(alertText);
+            alert.show();
+            return;
+        }
+
         double min = 0.0;
         double max = 999999.99;
         if (!priceMin.getText().isEmpty()) min = Double.parseDouble(priceMin.getText());
         if (!priceMax.getText().isEmpty()) max = Double.parseDouble(priceMax.getText());
 
         loadTable(types.getValue(), min, max);
-        System.out.println(types.getValue());
-        System.out.println(priceMin.getText() + " " + priceMax.getText());
     }
 
     public void openCartWindow(ActionEvent actionEvent) throws IOException {

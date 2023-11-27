@@ -69,13 +69,13 @@
             <Font size="15.0" />
          </font>
       </Label>
-      <Button layoutX="339.0" layoutY="172.0" mnemonicParsing="false" text="Change gmail" />
+      <Button layoutX="339.0" layoutY="172.0" mnemonicParsing="false" onAction="#openChangeGmail" text="Change gmail" />
       <Label fx:id="cardNo" layoutX="150.0" layoutY="211.0" text="cardNo">
          <font>
             <Font size="15.0" />
          </font>
       </Label>
-      <Button layoutX="339.0" layoutY="209.0" mnemonicParsing="false" text="Change card number" />
+      <Button layoutX="339.0" layoutY="209.0" mnemonicParsing="false" onAction="#openChangeCardNo" text="Change card number" />
       <Label fx:id="loginName" layoutX="150.0" layoutY="249.0" text="nickname">
          <font>
             <Font size="15.0" />
@@ -86,14 +86,16 @@
             <Font size="15.0" />
          </font>
       </Label>
-      <Button layoutX="339.0" layoutY="245.0" mnemonicParsing="false" text="Change nickname" />
-      <Button layoutX="339.0" layoutY="281.0" mnemonicParsing="false" text="Change password" />
-      <Button layoutX="467.0" layoutY="323.0" mnemonicParsing="false" text="Save changes">
+      <Button layoutX="339.0" layoutY="245.0" mnemonicParsing="false" onAction="#openChangeNickname" text="Change nickname" />
+      <Button layoutX="339.0" layoutY="281.0" mnemonicParsing="false" onAction="#openChangePassword" text="Change password" />
+      <Button layoutX="467.0" layoutY="323.0" mnemonicParsing="false" onAction="#saveChanges" text="Save changes">
          <font>
             <Font size="26.0" />
          </font>
       </Button>
-      <Button layoutX="41.0" layoutY="339.0" mnemonicParsing="false" text="Delete account" />
+      <Button layoutX="41.0" layoutY="339.0" mnemonicParsing="false" onAction="#loginToDelete" text="Delete account" />
       <Label fx:id="customerId" layoutX="467.0" layoutY="33.0" text="id" visible="false" />
+      <Label fx:id="password" layoutX="150.0" layoutY="306.0" text="pass" visible="false" />
+      <Label fx:id="card" layoutX="584.0" layoutY="186.0" text="card" visible="false" />
    </children>
 </AnchorPane>

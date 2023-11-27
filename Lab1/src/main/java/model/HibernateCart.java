@@ -41,7 +41,7 @@ public class HibernateCart {
             em.getTransaction().begin();
 
             Cart foundCart = em.find(Cart.class, cart.getId());
-            foundCart.updateCart(cart);
+            foundCart.update(cart);
             em.merge(foundCart);
 
             em.getTransaction().commit();
@@ -55,18 +55,17 @@ public class HibernateCart {
         }
     }
 
-    public void delete(Cart cart, HibernateProduct hibernateProduct) {
+    public void delete(Cart cart) {
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
 
-            cart.removeAllItems(hibernateProduct);
             Cart foundCart = em.find(Cart.class, cart.getId());
             em.remove(foundCart);
 
             em.getTransaction().commit();
-            System.out.println("created cart");  //delete
+            System.out.println("deleted cart");  //delete
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

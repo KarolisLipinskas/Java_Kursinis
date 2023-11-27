@@ -7,6 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -33,13 +34,10 @@ public class OrderListController implements Initializable {
     HibernateCart hibernateCart = new HibernateCart(entityManagerFactory);
 
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        System.out.println("Order List");
-    }
+    public void initialize(URL url, ResourceBundle resourceBundle) { }
 
     public void initData(String id) {
         customerId.setText(id);
-        System.out.println(customerId);
         loadTable();
     }
 
@@ -64,7 +62,12 @@ public class OrderListController implements Initializable {
 
     public void viewOrder(ActionEvent actionEvent) throws IOException {
         OrderListTableParameters p = table.getSelectionModel().getSelectedItem();
-        if (p == null) return;
+        if (p == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("No order selected");
+            alert.show();
+            return;
+        }
         Cart cart = hibernateCart.getCart(p.getOrder_id());
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxml/cart.fxml"));

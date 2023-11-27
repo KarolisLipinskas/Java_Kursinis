@@ -41,11 +41,31 @@ public class HibernateCustomer {
             em.getTransaction().begin();
 
             Customer foundCustomer = em.find(Customer.class, customer.getId());
-            foundCustomer.updateCustomer(customer);
+            foundCustomer.update(customer);
             em.merge(foundCustomer);
 
             em.getTransaction().commit();
             System.out.println("updated customer");  //delete
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+    }
+
+    public void delete(Customer customer) {
+        EntityManager em = null;
+        try {
+            em = getEntityManager();
+            em.getTransaction().begin();
+
+            Customer foundCustomer = em.find(Customer.class, customer.getId());
+            em.remove(foundCustomer);
+
+            em.getTransaction().commit();
+            System.out.println("deleted customer");  //delete
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
