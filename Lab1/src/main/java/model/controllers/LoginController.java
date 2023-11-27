@@ -9,7 +9,6 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import model.Customer;
 import model.HibernateCustomer;
-import model.HibernateEmployee;
 
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
