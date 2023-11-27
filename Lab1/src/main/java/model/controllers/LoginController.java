@@ -9,6 +9,8 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import model.Customer;
 import model.HibernateCustomer;
+import model.HibernateManager;
+import model.Manager;
 
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -32,6 +34,7 @@ public class LoginController implements Initializable {
 
     EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("kl_kursinis");
     HibernateCustomer hibernateCustomer = new HibernateCustomer(entityManagerFactory);
+    HibernateManager hibernateManager = new HibernateManager(entityManagerFactory);
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) { }
@@ -139,11 +142,12 @@ public class LoginController implements Initializable {
 
     public void login(ActionEvent actionEvent) throws IOException {
         Customer customer = hibernateCustomer.getCustomer(loginName.getText(), loginPass.getText());
+        Manager manager = hibernateManager.getManager(loginName.getText(), loginPass.getText());
         if (customer != null) {
             openMainWindow(customer);
-
-            Stage stage = (Stage) loginName.getScene().getWindow();
-            stage.close();
+        }
+        else if (manager != null) {
+            openManagerWindow();
         }
         else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -164,5 +168,22 @@ public class LoginController implements Initializable {
         mainController.initData(Integer.toString(customer.getId()));
 
         mainWindow.show();
+
+        Stage stage = (Stage) loginName.getScene().getWindow();
+        stage.close();
+    }
+
+    public void openManagerWindow() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxml/manager.fxml"));
+        Parent root = loader.load();
+
+        Stage managerWindow = new Stage();
+        managerWindow.setTitle("Manager page");
+        managerWindow.setScene(new Scene(root));
+
+        managerWindow.show();
+
+        Stage stage = (Stage) loginName.getScene().getWindow();
+        stage.close();
     }
 }

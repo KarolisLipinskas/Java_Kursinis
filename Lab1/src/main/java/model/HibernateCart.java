@@ -24,7 +24,6 @@ public class HibernateCart {
             em.getTransaction().begin();
             em.persist(em.merge(cart));
             em.getTransaction().commit();
-            System.out.println("created cart");  //delete
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -45,7 +44,6 @@ public class HibernateCart {
             em.merge(foundCart);
 
             em.getTransaction().commit();
-            System.out.println("updated cart");  //delete
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -65,7 +63,6 @@ public class HibernateCart {
             em.remove(foundCart);
 
             em.getTransaction().commit();
-            System.out.println("deleted cart");  //delete
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

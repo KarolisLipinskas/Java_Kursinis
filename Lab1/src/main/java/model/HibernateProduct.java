@@ -24,7 +24,6 @@ public class HibernateProduct {
             em.getTransaction().begin();
             em.persist(em.merge(product));
             em.getTransaction().commit();
-            System.out.println("created product");  //delete
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -45,7 +44,6 @@ public class HibernateProduct {
             em.merge(foundProduct);
 
             em.getTransaction().commit();
-            System.out.println("updated product");  //delete
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -65,7 +63,6 @@ public class HibernateProduct {
             em.remove(foundProduct);
 
             em.getTransaction().commit();
-            System.out.println("deleted product");  //delete
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

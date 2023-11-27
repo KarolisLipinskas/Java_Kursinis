@@ -24,7 +24,6 @@ public class HibernateCustomer {
             em.getTransaction().begin();
             em.persist(em.merge(customer));
             em.getTransaction().commit();
-            System.out.println("created customer");  //delete
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -45,7 +44,6 @@ public class HibernateCustomer {
             em.merge(foundCustomer);
 
             em.getTransaction().commit();
-            System.out.println("updated customer");  //delete
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -65,7 +63,6 @@ public class HibernateCustomer {
             em.remove(foundCustomer);
 
             em.getTransaction().commit();
-            System.out.println("deleted customer");  //delete
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -95,8 +92,6 @@ public class HibernateCustomer {
     public Customer getCustomer(String loginName, String loginPass) {
         EntityManager em = getEntityManager();
         for (Customer e : getAllCustomers()) {
-            System.out.println(e.toString());   //delete
-            System.out.println(e.getClass().getName().substring(e.getClass().getName().lastIndexOf('.') + 1));
             if (e.getUsername().equals(loginName) && e.getPassword().equals(loginPass)) return e;
         }
         em.close();
