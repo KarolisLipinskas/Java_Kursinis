@@ -40,7 +40,7 @@ public class HibernateProduct {
             em.getTransaction().begin();
 
             Product foundProduct = em.find(Product.class, product.getId());
-            foundProduct.updateProduct(product);
+            foundProduct.update(product);
             em.merge(foundProduct);
 
             em.getTransaction().commit();

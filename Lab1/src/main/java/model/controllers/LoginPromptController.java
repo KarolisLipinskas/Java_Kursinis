@@ -55,9 +55,6 @@ public class LoginPromptController implements Initializable {
     public void openWindow() throws IOException {
         if (next.getText().isEmpty()) {
             settingsController.deleteAccount();
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setContentText("Account deleted successfully");
-            alert.show();
             return;
         }
 

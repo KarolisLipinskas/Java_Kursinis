@@ -124,6 +124,9 @@ public class SettingsController implements Initializable {
         Customer customer = hibernateCustomer.getCustomer(customerId.getText());
         customer.removeCustomer(hibernateCustomer, hibernateCart, hibernateProduct);
         logout(null);
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setContentText("Account deleted successfully");
+        alert.show();
     }
 
     public void loginToDelete(ActionEvent actionEvent) throws IOException {

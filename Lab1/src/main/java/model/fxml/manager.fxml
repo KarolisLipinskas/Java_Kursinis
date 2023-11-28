@@ -33,5 +33,15 @@
             <Font size="15.0" />
          </font>
       </Button>
+      <Button layoutX="513.0" layoutY="197.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="130.0" onAction="#deleteItem" text="Delete Item">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Button>
+      <Button layoutX="509.0" layoutY="277.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="139.0" onAction="#updateItem" text="Update Item">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

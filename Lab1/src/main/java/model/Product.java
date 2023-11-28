@@ -100,12 +100,16 @@ public class Product {
         this.cart = cart;
     }
 
-    public void updateProduct(Product product) {
+    public void update(Product product) {
         this.setName(product.getName());
         this.setType(product.getType());
         this.setPrice(product.getPrice());
         this.setWarrantyYears(product.getWarrantyYears());
         this.setReviews(product.getReviews());
+    }
+
+    public void updateProduct(HibernateProduct hibernateProduct) {
+        hibernateProduct.update(this);
     }
 
     public void removeProduct(HibernateProduct hibernateProduct) {

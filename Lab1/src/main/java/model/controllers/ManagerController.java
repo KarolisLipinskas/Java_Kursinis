@@ -112,6 +112,81 @@ public class ManagerController implements Initializable {
         return check;
     }
 
+    public void updateItem(ActionEvent actionEvent) {
+        ProductTableParameters p = table.getSelectionModel().getSelectedItem();
+        if (p == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("- no item selected");
+            alert.show();
+            return;
+        }
+
+        boolean check = true;
+        String alertText = "";
+        if (!Pattern.matches("[0-9]*", newWarranty.getText())) {
+            check = false;
+            alertText += "- wrong warranty input\n";
+        }
+        if (!Pattern.matches("[0-9]*\\.[0-9]*", newPrice.getText()) && !Pattern.matches("[0-9]*", newPrice.getText())) {
+            check = false;
+            alertText += "- wrong price input\n";
+        }
+        if (!check) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText(alertText);
+            alert.show();
+        }
+
+        check = true;
+        Product product = hibernateProduct.getProduct(Integer.parseInt(p.getId()));
+        if (!newName.getText().isEmpty() && !newName.getText().equals(product.getName())) {
+            check = false;
+            product.setName(newName.getText());
+        }
+        if (!types.getValue().equals(product.getType())) {
+            check = false;
+            product.setType(types.getValue());
+        }
+        if (!newWarranty.getText().isEmpty() && !newWarranty.getText().equals(Integer.toString(product.getWarrantyYears()))) {
+            check = false;
+            product.setWarrantyYears(Integer.parseInt(newWarranty.getText()));
+        }
+        if (!newPrice.getText().isEmpty() && !newPrice.getText().equals(Double.toString(product.getPrice()))) {
+            check = false;
+            product.setPrice(Double.parseDouble(newPrice.getText()));
+        }
+        if (check) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("- no changes");
+            alert.show();
+            return;
+        }
+
+        product.updateProduct(hibernateProduct);
+        loadTable();
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setContentText("Item updated");
+        alert.show();
+    }
+
+    public void deleteItem(ActionEvent actionEvent) {
+        ProductTableParameters p = table.getSelectionModel().getSelectedItem();
+        if (p == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("- no item selected");
+            alert.show();
+            return;
+        }
+        Product product = hibernateProduct.getProduct(Integer.parseInt(p.getId()));
+        product.removeProduct(hibernateProduct);
+        loadTable();
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setContentText("Item deleted");
+        alert.show();
+    }
+
     public void logout(ActionEvent actionEvent) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxml/login.fxml"));
         Stage cartWindow = getStage(loader, "Login screen");
