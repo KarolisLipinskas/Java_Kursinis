@@ -63,7 +63,7 @@ public class MainController implements Initializable {
 
         for (Product product : hibernateProduct.getAllProducts()) {
             if ((productType.equals("All") || productType.equals(product.getType()))
-                    && product.getPrice() > min && product.getPrice() < max
+                    && product.getPrice() >= min && product.getPrice() <= max
                     && product.getCart() == null) {
 
                 ProductTableParameters productTableParameters = new ProductTableParameters(
@@ -132,11 +132,11 @@ public class MainController implements Initializable {
     public void filter(ActionEvent actionEvent) {
         boolean check = true;
         String alertText = "";
-        if (!Pattern.matches("[0-9]*", priceMin.getText())) {
+        if (!Pattern.matches("[0-9]*\\.[0-9]*", priceMin.getText()) && !Pattern.matches("[0-9]*", priceMin.getText())) {
             check = false;
             alertText += "- wrong min input\n";
         }
-        if (!Pattern.matches("[0-9]*", priceMax.getText())) {
+        if (!Pattern.matches("[0-9]*\\.[0-9]*", priceMax.getText()) && !Pattern.matches("[0-9]*", priceMax.getText())) {
             check = false;
             alertText += "- wrong max input\n";
         }
