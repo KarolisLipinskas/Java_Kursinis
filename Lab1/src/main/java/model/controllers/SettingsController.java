@@ -1,6 +1,5 @@
 package model.controllers;
 
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -10,7 +9,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import model.Customer;
+import model.entities.Customer;
 import model.HibernateCart;
 import model.HibernateCustomer;
 import model.HibernateProduct;

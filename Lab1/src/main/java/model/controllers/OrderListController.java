@@ -14,6 +14,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import model.*;
+import model.entities.Cart;
 
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;

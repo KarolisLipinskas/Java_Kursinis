@@ -1,4 +1,8 @@
-package model;
+package model.entities;
+
+import model.HibernateCart;
+import model.HibernateCustomer;
+import model.HibernateProduct;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;

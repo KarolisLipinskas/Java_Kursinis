@@ -1,4 +1,6 @@
-package model;
+package model.entities;
+
+import model.HibernateProduct;
 
 import javax.persistence.*;
 import java.util.List;

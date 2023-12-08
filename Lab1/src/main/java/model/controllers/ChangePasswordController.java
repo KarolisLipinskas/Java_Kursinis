@@ -5,7 +5,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import model.Customer;
 
 import java.net.URL;
 import java.util.ResourceBundle;

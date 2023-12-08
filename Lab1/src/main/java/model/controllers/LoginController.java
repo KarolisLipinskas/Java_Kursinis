@@ -7,10 +7,10 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-import model.Customer;
+import model.entities.Customer;
 import model.HibernateCustomer;
 import model.HibernateManager;
-import model.Manager;
+import model.entities.Manager;
 
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;

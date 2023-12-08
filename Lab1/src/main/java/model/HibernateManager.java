@@ -1,5 +1,7 @@
 package model;
 
+import model.entities.Manager;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;

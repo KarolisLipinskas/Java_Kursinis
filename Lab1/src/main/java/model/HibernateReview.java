@@ -1,5 +1,7 @@
 package model;
 
+import model.entities.Review;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 

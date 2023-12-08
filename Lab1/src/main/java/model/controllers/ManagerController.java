@@ -11,7 +11,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import model.HibernateProduct;
-import model.Product;
+import model.entities.Product;
 import model.ProductTableParameters;
 
 import javax.persistence.EntityManagerFactory;

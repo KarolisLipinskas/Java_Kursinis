@@ -1,8 +1,7 @@
-package model;
+package model.entities;
 
 import javax.persistence.Entity;
 import java.time.LocalDate;
-import java.util.List;
 
 @Entity
 public class Manager extends User {

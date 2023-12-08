@@ -1,4 +1,7 @@
-package model;
+package model.entities;
+
+import model.HibernateCart;
+import model.HibernateProduct;
 
 import javax.persistence.*;
 import java.util.ArrayList;
