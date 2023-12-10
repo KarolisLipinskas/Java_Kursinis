@@ -45,6 +45,11 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>top.jfunc.json</groupId>
+			<artifactId>Json-Gson</artifactId>
+			<version>1.0</version>
+		</dependency>
 	</dependencies>
 
 	<build>

@@ -14,11 +14,7 @@ public class ProductRest {
 
     @GetMapping(value = "/getAllProducts")
     public @ResponseBody Iterable<Product> getAllProducts() {
-        /*List<Product> products = productRepository.findAll();
-        List<Product> output = new ArrayList<>();
-        for (Product product : products) {
-            if (product.getCart() == null) output.add(product);
-        }*/
-        return productRepository.findAll();
+        //System.out.println(productRepository.findByCart_idIsNull());
+        return productRepository.findByCart_idIsNull();
     }
 }
