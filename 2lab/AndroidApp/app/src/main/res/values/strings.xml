@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">AndroidApp</string>
+    <string name="login_button_label">Login</string>
+    <string name="password_label">Enter password</string>
+    <string name="name_label">Enter name</string>
+    <string name="products_button_label">Browse Products</string>
+    <string name="cart_button_label">Your Cart</string>
+    <string name="settings_button_label">Account Settings</string>
+    <string name="logout_button_label">Logout</string>
+</resources>
