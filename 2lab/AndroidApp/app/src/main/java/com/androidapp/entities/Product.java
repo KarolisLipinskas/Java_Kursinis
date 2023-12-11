@@ -116,6 +116,11 @@ public class Product {
 
     @Override
     public String toString() {
+        return name + '\n' + type + "     " + price + "€";
+    }
+
+    /*@Override
+    public String toString() {
         String r = "{";
         if (reviews.isEmpty()) r += "null";
         else {
@@ -132,5 +137,5 @@ public class Product {
                 ", warrantyYears=" + warrantyYears +
                 ", reviews=" + r +
                 '}';
-    }
+    }*/
 }

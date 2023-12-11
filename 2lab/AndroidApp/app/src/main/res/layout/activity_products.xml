@@ -1,6 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                                   android:layout_width="match_parent"
-                                                   android:layout_height="match_parent">
+                                                   xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+                                                   android:layout_height="match_parent"
+                                                   tools:context=".ProductsActivity">
 
+    <EditText
+            android:layout_width="77dp"
+            android:layout_height="47dp"
+            android:inputType="text"
+            android:hint="@string/priceMin_label"
+            android:ems="10"
+            android:id="@+id/priceMin"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="140dp"
+            app:layout_constraintHorizontal_bias="0.31"/>
+    <EditText
+            android:layout_width="76dp"
+            android:layout_height="47dp"
+            android:inputType="text"
+            android:hint="@string/priceMax_label"
+            android:ems="10"
+            android:id="@+id/priceMax"
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toEndOf="@+id/priceMin"
+            app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="140dp"
+            app:layout_constraintHorizontal_bias="0.025"/>
+    <Button
+            android:onClick="filterProducts"
+            android:text="@string/filter_button_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/filterButton"
+            app:layout_constraintTop_toBottomOf="@+id/menuButton" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginTop="76dp"
+            app:layout_constraintHorizontal_bias="0.897"/>
+    <Button
+            android:onClick="addToCart"
+            android:text="@string/add_button_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/addButton"
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginTop="672dp"
+            app:layout_constraintHorizontal_bias="0.805"/>
+    <Button
+            android:text="@string/cart_button_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/cart2Button"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginTop="672dp"
+            app:layout_constraintHorizontal_bias="0.186"/>
+    <ListView
+            android:layout_width="366dp"
+            android:layout_height="441dp"
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="212dp"
+            app:layout_constraintHorizontal_bias="0.483" android:id="@+id/productList"/>
+    <Button
+            android:onClick="openMenuPage"
+            android:text="@string/menu_button_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/menuButton"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginTop="16dp"
+            app:layout_constraintHorizontal_bias="0.9"/>
+
+    <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="170dp"
+            android:layout_height="64dp"
+            android:hint="@string/type_selection_label"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.439" app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="64dp">
+
+        <AutoCompleteTextView
+                android:id="@+id/typeSelection"
+                android:text="All"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="64dp"
+                android:inputType="none"
+        />
+    </com.google.android.material.textfield.TextInputLayout>
+    <TextView
+            android:text="@string/price_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/priceLabel"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginTop="156dp"
+            app:layout_constraintHorizontal_bias="0.086"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

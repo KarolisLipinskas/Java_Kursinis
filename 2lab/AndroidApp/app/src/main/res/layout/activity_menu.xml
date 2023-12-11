@@ -4,6 +4,7 @@
                                                    android:layout_height="match_parent">
 
     <Button
+            android:onClick="openProductsPage"
             android:text="@string/products_button_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" android:id="@+id/productsButton"
@@ -11,6 +12,7 @@
             app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="144dp"
             app:layout_constraintHorizontal_bias="0.506"/>
     <Button
+            android:onClick="openCartPage"
             android:text="@string/cart_button_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" android:id="@+id/cartButton"

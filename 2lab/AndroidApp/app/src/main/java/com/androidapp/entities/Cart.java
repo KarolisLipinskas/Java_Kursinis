@@ -12,7 +12,6 @@ public class Cart {
     private String status;
     private double price;
 
-    //@OrderBy("id")
     private List<Product> products;
     private CartComment cartComment;
     private Customer customer;

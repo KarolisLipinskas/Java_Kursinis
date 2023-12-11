@@ -7,4 +7,15 @@
     <string name="cart_button_label">Your Cart</string>
     <string name="settings_button_label">Account Settings</string>
     <string name="logout_button_label">Logout</string>
+    <string name="menu_button_label">Menu</string>
+    <string name="price_label">Price:</string>
+    <string name="priceMin_label">min</string>
+    <string name="priceMax_label">max</string>
+    <string name="filter_button_label">Filter</string>
+    <string name="add_button_label">Add To Cart</string>
+    <string name="type_selection_label">Types</string>
+    <string name="status_label">Status:</string>
+    <string name="checkout_button_label">Checkout</string>
+    <string name="remove_item_button_label">Remove Item</string>
+    <string name="delete_cart_button_label">Delete Cart</string>
 </resources>

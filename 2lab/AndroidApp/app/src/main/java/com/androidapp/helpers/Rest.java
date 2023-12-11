@@ -35,6 +35,7 @@ public class Rest {
     }
 
     public static String sendPost(String postUrl, String jsonInfo) throws IOException {
+        System.out.println(jsonInfo);
         URL url = new URL(postUrl);
         HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
         httpURLConnection.setRequestMethod("POST");
