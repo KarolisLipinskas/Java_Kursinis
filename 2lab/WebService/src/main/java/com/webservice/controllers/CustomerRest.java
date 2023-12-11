@@ -2,10 +2,8 @@ package com.webservice.controllers;
 
 import com.google.gson.Gson;
 import com.webservice.entities.Customer;
-import com.webservice.errors.CustomerNotFound;
 import com.webservice.repos.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -14,10 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Properties;
-
-import static org.aspectj.weaver.Iterators.one;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 public class CustomerRest {
@@ -31,7 +25,8 @@ public class CustomerRest {
 
     @GetMapping(value = "/getCustomer/{id}")
     public Customer getCustomer(@PathVariable int id) {
-        Customer customer = customerRepository.findById(id).orElseThrow(() -> new CustomerNotFound(id));
+        Customer customer = customerRepository.findById(id).orElse(null);
+        if (customer == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         return customer;
     }
 
@@ -52,6 +47,8 @@ public class CustomerRest {
 
     @PostMapping(value = "/insertCustomer")
     public @ResponseBody Customer saveCustomer(@RequestBody Customer customer) {
+        Customer tempCustomer = customerRepository.findById(customer.getId()).orElse(null);
+        if (tempCustomer != null) throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE);
         return customerRepository.saveAndFlush(customer);
     }
 
@@ -78,11 +75,11 @@ public class CustomerRest {
 
     @DeleteMapping(value = "/deleteCustomer/{id}")
     public @ResponseBody String deleteCustomer(@PathVariable int id) {
-        //add delete product
-        //add delete cart
+        Customer tempCustomer = customerRepository.findById(id).orElse(null);
+        if (tempCustomer == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         customerRepository.deleteById(id);
         Customer customer = customerRepository.findById(id).orElse(null);
-        if (customer == null) return ("Deleted user id: " + id);
+        if (customer == null) return ("Deleted customer id: " + id);
         else return "Error";
     }
 }
