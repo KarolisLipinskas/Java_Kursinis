@@ -3,18 +3,27 @@ package com.androidapp;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
+import com.androidapp.entities.Cart;
 import com.androidapp.entities.Customer;
+import com.androidapp.helpers.Rest;
 import com.androidapp.jsonserializers.LocalDateSerializer;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.io.IOException;
 import java.time.LocalDate;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
+
+import static com.androidapp.helpers.Constants.ADD_NEW_CART;
+import static com.androidapp.helpers.Constants.GET_CUSTOMER_BY_ID;
 
 public class MenuActivity extends AppCompatActivity {
     Customer connectedCustomer;
-    String customerInfo;
 
     @SuppressLint("NewApi")
     @Override
@@ -23,7 +32,7 @@ public class MenuActivity extends AppCompatActivity {
         setContentView(R.layout.activity_menu);
 
         Intent intent = getIntent();
-        customerInfo = intent.getStringExtra("customerObject");
+        String customerInfo = intent.getStringExtra("customerObject");
         GsonBuilder builder = new GsonBuilder();
         builder.registerTypeAdapter(LocalDate.class, new LocalDateSerializer());
         Gson customerGson = builder.create();
@@ -33,14 +42,91 @@ public class MenuActivity extends AppCompatActivity {
     }
 
     public void openProductsPage(View view) {
-        Intent intent = new Intent(MenuActivity.this, ProductsActivity.class);
-        intent.putExtra("customerObject", customerInfo);
-        startActivity(intent);
+        Executor executor = Executors.newSingleThreadExecutor();
+        Handler handler = new Handler(Looper.getMainLooper());
+
+        executor.execute(()->{
+            try {
+                String response = Rest.sendGet(GET_CUSTOMER_BY_ID + connectedCustomer.getId());
+                System.out.println(response);
+                handler.post(()->{
+                    try {
+                        if (!response.equals("Error")) {
+                            Intent intent = new Intent(MenuActivity.this, ProductsActivity.class);
+                            intent.putExtra("customerObject", response);
+                            startActivity(intent);
+                        }
+                        else {
+                            System.out.println("Error");
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                });
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     public void openCartPage(View view) {
-        Intent intent = new Intent(MenuActivity.this, CartActivity.class);
-        intent.putExtra("customerObject", customerInfo);
+        Executor executor = Executors.newSingleThreadExecutor();
+        Handler handler = new Handler(Looper.getMainLooper());
+
+        executor.execute(()->{
+            try {
+                String response = Rest.sendGet(GET_CUSTOMER_BY_ID + connectedCustomer.getId());
+                System.out.println(response);
+                handler.post(()->{
+                    try {
+                        if (!response.equals("Error")) {
+                            Intent intent = new Intent(MenuActivity.this, CartActivity.class);
+                            intent.putExtra("customerObject", response);
+                            startActivity(intent);
+                        }
+                        else {
+                            System.out.println("Error");
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                });
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
+    public void openSettingsPage(View view) {
+        Executor executor = Executors.newSingleThreadExecutor();
+        Handler handler = new Handler(Looper.getMainLooper());
+
+        executor.execute(()->{
+            try {
+                String response = Rest.sendGet(GET_CUSTOMER_BY_ID + connectedCustomer.getId());
+                System.out.println(response);
+                handler.post(()->{
+                    try {
+                        if (!response.equals("Error")) {
+                            Intent intent = new Intent(MenuActivity.this, SettingsActivity.class);
+                            intent.putExtra("customerObject", response);
+                            startActivity(intent);
+                        }
+                        else {
+                            System.out.println("Error");
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                });
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
+    public void logout(View view) {
+        Intent intent = new Intent(MenuActivity.this, MainActivity.class);
         startActivity(intent);
     }
 }

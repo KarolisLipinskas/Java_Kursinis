@@ -34,7 +34,7 @@ public class ProductsActivity extends AppCompatActivity {
 
     String customerInfo;
     Customer connectedCustomer;
-    String[] types = {"All", "Bike", "Frame", "..."};
+    String[] types = {"All", "Bike", "Brakes", "Fork", "Frame", "Handlebars", "Pedals", "Shock", "Wheels"};
     AutoCompleteTextView autoCompleteTextView;
     ArrayAdapter<String> adapterItems;
     List<Product> productListFromJson;
@@ -138,7 +138,7 @@ public class ProductsActivity extends AppCompatActivity {
         setProductList(filteredList);
     }
 
-    public void openMenuPage(View view) {
+    public void openMenuPagefromProducts(View view) {
         Executor executor = Executors.newSingleThreadExecutor();
         Handler handler = new Handler(Looper.getMainLooper());
 
@@ -154,7 +154,7 @@ public class ProductsActivity extends AppCompatActivity {
                             startActivity(intent);
                         }
                         else {
-                            System.out.println("Wrong username or password");
+                            System.out.println("Error");
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -168,50 +168,15 @@ public class ProductsActivity extends AppCompatActivity {
 
     @SuppressLint("NewApi")
     public void addToCart(View view) {
-        final Cart[] customersCart = new Cart[1];
-        if (connectedCustomer.getCartList().isEmpty() || !connectedCustomer.getCartList().get(connectedCustomer.getCartList().size()-1).getStatus().equals("open")) {
-
-            GsonBuilder builder = new GsonBuilder();
-            builder.registerTypeAdapter(LocalDate.class, new LocalDateSerializer());
-            Gson gson = builder.create();
-
-            Cart tempCart = new Cart();
-            tempCart.setCustomer(connectedCustomer);
-            tempCart.setStatus("open");
-            String newCartInfo = gson.toJson(tempCart);
-
-            Executor executor = Executors.newSingleThreadExecutor();
-            Handler handler = new Handler(Looper.getMainLooper());
-            executor.execute(()->{
-                try {
-                    String response = Rest.sendPost(ADD_NEW_CART, newCartInfo);
-                    System.out.println(response);
-                    handler.post(()->{
-                        try {
-                            if (!response.equals("Error")) {
-                                Gson cartGson = new Gson();
-                                customersCart[0] = cartGson.fromJson(response, Cart.class);
-                                System.out.println("CART ID: " + customersCart[0].getId());
-                            }
-                            else {
-                                System.out.println("Error");
-                            }
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    });
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            });
-        }
-        else customersCart[0] = connectedCustomer.getCartList().get(connectedCustomer.getCartList().size()-1);
+        System.out.println("TEST: +++ " + connectedCustomer.getCartList().get(connectedCustomer.getCartList().size()-1));
 
         if (selection == null) return;
 
+        Cart cart = connectedCustomer.getCartList().get(connectedCustomer.getCartList().size()-1);
+
         Product product = selection;
         product.setId(0);
-        product.setCart(customersCart[0]);
+        product.setCart(cart);
         String newProductInfo = new Gson().toJson(product);
 
         Executor executor = Executors.newSingleThreadExecutor();
@@ -227,12 +192,43 @@ public class ProductsActivity extends AppCompatActivity {
                             Product product1 = cartGson.fromJson(response, Product.class);
                             System.out.println("PRODUCT: " + product1);
 
+                            updateCart(cart);
+
                             AlertDialog.Builder builder = new AlertDialog.Builder(ProductsActivity.this);
                             builder.setMessage("Added item: " + product1.getName());
                             builder.setCancelable(true);
                             builder.setNeutralButton("OK", (dialog, which) -> dialog.cancel());
                             AlertDialog alertPopup = builder.create();
                             alertPopup.show();
+                        }
+                        else {
+                            System.out.println("Error");
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                });
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
+    public void updateCart(Cart cart) {
+        String lastCartInfo = new Gson().toJson(cart);
+
+        Executor executor = Executors.newSingleThreadExecutor();
+        Handler handler = new Handler(Looper.getMainLooper());
+
+        executor.execute(()->{
+            try {
+                String response = Rest.sendPut(UPDATE_CART, lastCartInfo);
+                System.out.println(response);
+                handler.post(()->{
+                    try {
+                        if (!response.equals("Error")) {
+                            Gson cartGson = new Gson();
+                            System.out.println(cartGson.fromJson(response, Cart.class));
                         }
                         else {
                             System.out.println("Error");

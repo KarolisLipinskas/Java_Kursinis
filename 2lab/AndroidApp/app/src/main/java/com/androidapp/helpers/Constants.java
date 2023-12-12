@@ -8,4 +8,8 @@ public class Constants {
     public static final String ADD_NEW_CART = BASE_URL + "/insertCart";
     public static final String ADD_NEW_PRODUCT = BASE_URL + "/insertProduct";
     public static final String GET_CUSTOMER_BY_ID = BASE_URL + "/getCustomer/";
+    public static final String UPDATE_CART = BASE_URL + "/updateCart";
+    public static final String DELETE_PRODUCT = BASE_URL + "/deleteProduct/";
+    public static final String UPDATE_CUSTOMER = BASE_URL + "/updateCustomer";
+    public static final String ADD_CUSTOMER = BASE_URL + "/insertCustomer";
 }

@@ -1,6 +1,141 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                                   android:layout_width="match_parent"
+                                                   xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
                                                    android:layout_height="match_parent">
 
+    <Button
+            android:onClick="saveChanges"
+            android:text="@string/save_button_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/save"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginTop="668dp"/>
+    <EditText
+            android:layout_width="250dp"
+            android:layout_height="45dp"
+            android:inputType="text"
+            android:text="Name"
+            android:ems="10"
+            android:id="@+id/name"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginTop="88dp"
+            app:layout_constraintHorizontal_bias="0.72"/>
+    <EditText
+            android:layout_width="250dp"
+            android:layout_height="45dp"
+            android:inputType="text"
+            android:text="Name"
+            android:ems="10"
+            android:id="@+id/surname"
+            app:layout_constraintTop_toBottomOf="@+id/name" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginTop="20dp"
+            app:layout_constraintHorizontal_bias="0.72"/>
+    <EditText
+            android:layout_width="250dp"
+            android:layout_height="45dp"
+            android:inputType="text"
+            android:text="Name"
+            android:ems="10"
+            android:id="@+id/username"
+            app:layout_constraintTop_toBottomOf="@+id/surname" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginTop="20dp"
+            app:layout_constraintHorizontal_bias="0.727"/>
+    <EditText
+            android:hint="@string/new_pass_label"
+            android:layout_width="310dp"
+            android:layout_height="45dp"
+            android:inputType="textPassword"
+            android:ems="10"
+            android:id="@+id/newPassword"
+            app:layout_constraintTop_toBottomOf="@+id/username" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginTop="24dp"
+            app:layout_constraintHorizontal_bias="0.532"/>
+    <EditText
+            android:layout_width="250dp"
+            android:layout_height="45dp"
+            android:inputType="textEmailAddress"
+            android:ems="10"
+            android:id="@+id/email"
+            app:layout_constraintTop_toBottomOf="@+id/newPasswordR" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginTop="28dp"
+            app:layout_constraintHorizontal_bias="0.727"/>
+    <EditText
+            android:layout_width="250dp"
+            android:layout_height="45dp"
+            android:inputType="date"
+            android:ems="10"
+            android:id="@+id/birthDate"
+            app:layout_constraintTop_toBottomOf="@+id/email"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="24dp" app:layout_constraintHorizontal_bias="0.727"/>
+    <EditText
+            android:hint="@string/new_passr_label"
+            android:layout_width="310dp"
+            android:layout_height="45dp"
+            android:inputType="textPassword"
+            android:ems="10"
+            android:id="@+id/newPasswordR"
+            app:layout_constraintTop_toBottomOf="@+id/newPassword"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="20dp" app:layout_constraintHorizontal_bias="0.521"/>
+    <Button
+            android:onClick="openMenuPageFromSettings"
+            android:text="@string/menu_button_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/menu"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginTop="16dp"
+            app:layout_constraintHorizontal_bias="0.87"/>
+    <EditText
+            android:layout_width="250dp"
+            android:layout_height="45dp"
+            android:inputType="text"
+            android:text="Name"
+            android:ems="10"
+            android:id="@+id/cardNo"
+            app:layout_constraintTop_toBottomOf="@+id/birthDate" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginTop="28dp"
+            app:layout_constraintHorizontal_bias="0.727"/>
+    <TextView
+            android:text="@string/name_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/nameLabel"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginTop="100dp"
+            app:layout_constraintHorizontal_bias="0.068"/>
+    <TextView
+            android:text="@string/surname_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/surnameLabel"
+            app:layout_constraintTop_toBottomOf="@+id/nameLabel" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginTop="48dp"
+            app:layout_constraintHorizontal_bias="0.068"/>
+    <TextView
+            android:text="@string/username_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/usernameLabel"
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="228dp"
+            app:layout_constraintHorizontal_bias="0.068"/>
+    <TextView
+            android:text="@string/email_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/emailLabel"
+            app:layout_constraintTop_toBottomOf="@+id/usernameLabel" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginTop="196dp"
+            app:layout_constraintHorizontal_bias="0.068"/>
+    <TextView
+            android:text="@string/birth_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/birthLabel"
+            app:layout_constraintTop_toBottomOf="@+id/emailLabel" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginTop="48dp"
+            app:layout_constraintHorizontal_bias="0.068"/>
+    <TextView
+            android:text="@string/card_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/cardLabel"
+            app:layout_constraintTop_toBottomOf="@+id/birthLabel" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginTop="52dp"
+            app:layout_constraintHorizontal_bias="0.068"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -50,10 +50,8 @@ public class CartRest {
         if (cart.getCartComment() == null) cart.setCartComment(tempCart.getCartComment());
         cart.setPrice(price);
         if (cart.getStatus() == null) cart.setStatus(tempCart.getStatus());
-        if (cart.getProducts() == null) {
-            if (tempCart.getProducts().isEmpty()) cart.setProducts(new ArrayList<>());
-            else cart.setProducts(tempCart.getProducts());
-        }
+        if (tempCart.getProducts().isEmpty()) cart.setProducts(new ArrayList<>());
+        else cart.setProducts(tempCart.getProducts());
         if (cart.getCustomer() == null && tempCart.getCustomer() == null) throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE);
         else cart.setCustomer(tempCart.getCustomer());
         cartRepository.save(cart);

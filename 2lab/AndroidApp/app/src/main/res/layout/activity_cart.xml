@@ -10,7 +10,7 @@
             app:layout_constraintStart_toStartOf="parent" android:layout_marginTop="80dp"
             app:layout_constraintHorizontal_bias="0.492" android:id="@+id/productListInCart"/>
     <Button
-            android:onClick="openMenuPage"
+            android:onClick="openMenuPageFromCart"
             android:text="@string/menu_button_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" android:id="@+id/menuButton2"
@@ -18,20 +18,15 @@
             app:layout_constraintStart_toStartOf="parent" android:layout_marginTop="16dp"
             app:layout_constraintHorizontal_bias="0.913"/>
     <Button
+            android:onClick="removeItem"
             android:text="@string/remove_item_button_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:id="@+id/removeButton"
+            android:layout_width="145dp"
+            android:layout_height="58dp" android:id="@+id/removeButton"
             app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintHorizontal_bias="0.079" app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="572dp"/>
+            app:layout_constraintHorizontal_bias="0.062" app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="608dp"/>
     <Button
-            android:text="@string/delete_cart_button_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:id="@+id/deleteCartButton"
-            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/removeButton" android:layout_marginTop="28dp"
-            app:layout_constraintHorizontal_bias="0.079"/>
-    <Button
+            android:onClick="checkout"
             android:text="@string/checkout_button_label"
             android:layout_width="155dp"
             android:layout_height="60dp" android:id="@+id/checkoutButton"
@@ -58,13 +53,13 @@
             android:layout_height="wrap_content" android:id="@+id/cartPriceLabel"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.585" app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintHorizontal_bias="0.547" app:layout_constraintTop_toTopOf="parent"
             android:layout_marginTop="572dp"/>
     <TextView
             android:text="-"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" android:id="@+id/cartPrice"
             app:layout_constraintStart_toEndOf="@+id/cartPriceLabel" app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.259"
+            app:layout_constraintHorizontal_bias="0.139"
             app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="572dp"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

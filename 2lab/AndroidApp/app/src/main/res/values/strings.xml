@@ -18,4 +18,13 @@
     <string name="checkout_button_label">Checkout</string>
     <string name="remove_item_button_label">Remove Item</string>
     <string name="delete_cart_button_label">Delete Cart</string>
+    <string name="new_pass_label">New Password</string>
+    <string name="new_passr_label">Repeat Password</string>
+    <string name="name_S_label">Name</string>
+    <string name="surname_label">Surname</string>
+    <string name="username_label">Username</string>
+    <string name="email_label">Email</string>
+    <string name="birth_label">BirthDay</string>
+    <string name="card_label">Card No</string>
+    <string name="save_button_label">Save Changes</string>
 </resources>

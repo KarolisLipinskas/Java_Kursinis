@@ -35,18 +35,11 @@
     <Button
             android:onClick="addToCart"
             android:text="@string/add_button_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:id="@+id/addButton"
+            android:layout_width="217dp"
+            android:layout_height="70dp" android:id="@+id/addButton"
             app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent" android:layout_marginTop="672dp"
-            app:layout_constraintHorizontal_bias="0.805"/>
-    <Button
-            android:text="@string/cart_button_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:id="@+id/cart2Button"
-            app:layout_constraintTop_toTopOf="parent" app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" android:layout_marginTop="672dp"
-            app:layout_constraintHorizontal_bias="0.186"/>
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginTop="676dp"
+            app:layout_constraintHorizontal_bias="0.556"/>
     <ListView
             android:layout_width="366dp"
             android:layout_height="441dp"
@@ -54,7 +47,7 @@
             app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="212dp"
             app:layout_constraintHorizontal_bias="0.483" android:id="@+id/productList"/>
     <Button
-            android:onClick="openMenuPage"
+            android:onClick="openMenuPagefromProducts"
             android:text="@string/menu_button_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" android:id="@+id/menuButton"
