@@ -19,8 +19,7 @@ import java.time.LocalDate;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
-import static com.androidapp.helpers.Constants.ADD_NEW_CART;
-import static com.androidapp.helpers.Constants.GET_CUSTOMER_BY_ID;
+import static com.androidapp.helpers.Constants.*;
 
 public class MenuActivity extends AppCompatActivity {
     Customer connectedCustomer;
@@ -103,17 +102,18 @@ public class MenuActivity extends AppCompatActivity {
 
         executor.execute(()->{
             try {
-                String response = Rest.sendGet(GET_CUSTOMER_BY_ID + connectedCustomer.getId());
+                String response = Rest.sendGet(GET_ALL_CUSTOMERS);
                 System.out.println(response);
                 handler.post(()->{
                     try {
                         if (!response.equals("Error")) {
                             Intent intent = new Intent(MenuActivity.this, SettingsActivity.class);
                             intent.putExtra("customerObject", response);
+                            intent.putExtra("id", connectedCustomer.getId());
                             startActivity(intent);
                         }
                         else {
-                            System.out.println("Error");
+                            System.out.println("Wrong username or password");
                         }
                     } catch (Exception e) {
                         e.printStackTrace();

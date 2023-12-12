@@ -27,4 +27,5 @@
     <string name="birth_label">BirthDay</string>
     <string name="card_label">Card No</string>
     <string name="save_button_label">Save Changes</string>
+    <string name="register_button_label">Register</string>
 </resources>

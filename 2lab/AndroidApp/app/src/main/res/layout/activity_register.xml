@@ -4,85 +4,94 @@
                                                    android:layout_height="match_parent">
 
     <Button
-            android:onClick="saveChanges"
-            android:text="@string/save_button_label"
+            android:onClick="register"
+            android:text="@string/register_button_label"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:id="@+id/save"
+            android:layout_height="wrap_content" android:id="@+id/register"
             app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" android:layout_marginTop="668dp"/>
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginTop="644dp"/>
     <EditText
             android:layout_width="250dp"
             android:layout_height="45dp"
             android:inputType="text"
-            android:text="Name"
+            android:hint="@string/name_S_label"
             android:ems="10"
-            android:id="@+id/name"
+            android:id="@+id/name2"
             app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" android:layout_marginTop="88dp"
-            app:layout_constraintHorizontal_bias="0.72"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.745"
+            android:layout_marginTop="88dp"/>
     <EditText
             android:layout_width="250dp"
             android:layout_height="45dp"
             android:inputType="text"
-            android:text="Name"
+            android:hint="@string/surname_label"
             android:ems="10"
-            android:id="@+id/surname"
-            app:layout_constraintTop_toBottomOf="@+id/name" app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" android:layout_marginTop="20dp"
-            app:layout_constraintHorizontal_bias="0.72"/>
+            android:id="@+id/surname2"
+            app:layout_constraintTop_toBottomOf="@+id/name2" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.745"
+            android:layout_marginTop="24dp"/>
     <EditText
             android:layout_width="250dp"
             android:layout_height="45dp"
             android:inputType="text"
-            android:text="Name"
+            android:hint="@string/username_label"
             android:ems="10"
-            android:id="@+id/username"
-            app:layout_constraintTop_toBottomOf="@+id/surname" app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" android:layout_marginTop="20dp"
-            app:layout_constraintHorizontal_bias="0.727"/>
+            android:id="@+id/username2"
+            app:layout_constraintTop_toBottomOf="@+id/surname2" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.745"
+            android:layout_marginTop="16dp"/>
     <EditText
             android:hint="@string/new_pass_label"
             android:layout_width="310dp"
             android:layout_height="45dp"
             android:inputType="textPassword"
             android:ems="10"
-            android:id="@+id/newPassword"
-            app:layout_constraintTop_toBottomOf="@+id/username" app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" android:layout_marginTop="24dp"
-            app:layout_constraintHorizontal_bias="0.532"/>
+            android:id="@+id/newPassword2"
+            app:layout_constraintTop_toBottomOf="@+id/username2" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.594"
+            android:layout_marginTop="20dp"/>
     <EditText
+            android:hint="@string/email_label"
             android:layout_width="250dp"
             android:layout_height="45dp"
             android:inputType="textEmailAddress"
             android:ems="10"
-            android:id="@+id/email"
-            app:layout_constraintTop_toBottomOf="@+id/newPasswordR" app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" android:layout_marginTop="28dp"
-            app:layout_constraintHorizontal_bias="0.727"/>
+            android:id="@+id/email2"
+            app:layout_constraintTop_toBottomOf="@+id/newPasswordR2" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.726"
+            android:layout_marginTop="32dp"/>
     <EditText
+            android:hint="@string/birth_label"
             android:layout_width="250dp"
             android:layout_height="45dp"
             android:inputType="date"
             android:ems="10"
-            android:id="@+id/birthDate"
-            app:layout_constraintTop_toBottomOf="@+id/email"
+            android:id="@+id/birthDate2"
+            app:layout_constraintTop_toBottomOf="@+id/email2"
             app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="24dp" app:layout_constraintHorizontal_bias="0.727"/>
+            app:layout_constraintHorizontal_bias="0.726"
+            android:layout_marginTop="20dp"/>
     <EditText
             android:hint="@string/new_passr_label"
             android:layout_width="310dp"
             android:layout_height="45dp"
             android:inputType="textPassword"
             android:ems="10"
-            android:id="@+id/newPasswordR"
-            app:layout_constraintTop_toBottomOf="@+id/newPassword"
+            android:id="@+id/newPasswordR2"
+            app:layout_constraintTop_toBottomOf="@+id/newPassword2"
             app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="20dp" app:layout_constraintHorizontal_bias="0.521"/>
+            app:layout_constraintHorizontal_bias="0.564"
+            android:layout_marginTop="24dp"/>
     <Button
-            android:onClick="openMenuPageFromSettings"
-            android:text="@string/menu_button_label"
+            android:onClick="goToLoginPage"
+            android:text="@string/login_button_label"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:id="@+id/menu"
+            android:layout_height="wrap_content" android:id="@+id/login"
             app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" android:layout_marginTop="16dp"
             app:layout_constraintHorizontal_bias="0.87"/>
@@ -90,52 +99,54 @@
             android:layout_width="250dp"
             android:layout_height="45dp"
             android:inputType="text"
-            android:text="Name"
+            android:hint="@string/card_label"
             android:ems="10"
-            android:id="@+id/cardNo"
-            app:layout_constraintTop_toBottomOf="@+id/birthDate" app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" android:layout_marginTop="28dp"
-            app:layout_constraintHorizontal_bias="0.727"/>
+            android:id="@+id/cardNo2"
+            app:layout_constraintTop_toBottomOf="@+id/birthDate2" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.726"
+            android:layout_marginTop="32dp"/>
     <TextView
             android:text="@string/name_S_label"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:id="@+id/nameLabel"
+            android:layout_height="wrap_content" android:id="@+id/nameLabel2"
             app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" android:layout_marginTop="100dp"
             app:layout_constraintHorizontal_bias="0.068"/>
     <TextView
             android:text="@string/surname_label"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:id="@+id/surnameLabel"
-            app:layout_constraintTop_toBottomOf="@+id/nameLabel" app:layout_constraintStart_toStartOf="parent"
+            android:layout_height="wrap_content" android:id="@+id/surnameLabel2"
+            app:layout_constraintTop_toBottomOf="@+id/nameLabel2" app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" android:layout_marginTop="48dp"
             app:layout_constraintHorizontal_bias="0.068"/>
     <TextView
             android:text="@string/username_label"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:id="@+id/usernameLabel"
+            android:layout_height="wrap_content" android:id="@+id/usernameLabel2"
             app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="228dp"
             app:layout_constraintHorizontal_bias="0.068"/>
     <TextView
             android:text="@string/email_label"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:id="@+id/emailLabel"
-            app:layout_constraintTop_toBottomOf="@+id/usernameLabel" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_height="wrap_content" android:id="@+id/emailLabel2"
+            app:layout_constraintTop_toBottomOf="@+id/usernameLabel2" app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" android:layout_marginTop="196dp"
             app:layout_constraintHorizontal_bias="0.068"/>
     <TextView
             android:text="@string/birth_label"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:id="@+id/birthLabel"
-            app:layout_constraintTop_toBottomOf="@+id/emailLabel" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_height="wrap_content" android:id="@+id/birthLabel2"
+            app:layout_constraintTop_toBottomOf="@+id/emailLabel2" app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" android:layout_marginTop="48dp"
             app:layout_constraintHorizontal_bias="0.068"/>
     <TextView
             android:text="@string/card_label"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:id="@+id/cardLabel"
-            app:layout_constraintTop_toBottomOf="@+id/birthLabel" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_height="wrap_content" android:id="@+id/cardLabel2"
+            app:layout_constraintTop_toBottomOf="@+id/birthLabel2" app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" android:layout_marginTop="52dp"
             app:layout_constraintHorizontal_bias="0.068"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

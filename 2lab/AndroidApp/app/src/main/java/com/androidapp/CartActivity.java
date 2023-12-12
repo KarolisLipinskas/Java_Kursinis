@@ -169,7 +169,25 @@ public class CartActivity extends AppCompatActivity {
     }
 
     public void removeItem(View view) {
-        if (selection == null) return;
+        if (!cart.getStatus().equals("open")) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(CartActivity.this);
+            builder.setMessage("ERROR\nOrder is no longer open");
+            builder.setCancelable(true);
+            builder.setNeutralButton("OK", (dialog, which) -> dialog.cancel());
+            AlertDialog alertPopup = builder.create();
+            alertPopup.show();
+            return;
+        }
+        if (selection == null) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(CartActivity.this);
+            builder.setMessage("ERROR\nNo item selected");
+            builder.setCancelable(true);
+            builder.setNeutralButton("OK", (dialog, which) -> dialog.cancel());
+            AlertDialog alertPopup = builder.create();
+            alertPopup.show();
+            return;
+        }
+
         Product product = selection;
 
         Executor executor = Executors.newSingleThreadExecutor();
@@ -197,7 +215,33 @@ public class CartActivity extends AppCompatActivity {
     }
 
     public void checkout(View view) {
-        if (!cart.getStatus().equals("open")) return;
+        if (!cart.getStatus().equals("open")) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(CartActivity.this);
+            builder.setMessage("ERROR\nOrder is no longer open");
+            builder.setCancelable(true);
+            builder.setNeutralButton("OK", (dialog, which) -> dialog.cancel());
+            AlertDialog alertPopup = builder.create();
+            alertPopup.show();
+            return;
+        }
+        if (cart.getProducts() == null || cart.getProducts().isEmpty()) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(CartActivity.this);
+            builder.setMessage("ERROR\nNo items in cart");
+            builder.setCancelable(true);
+            builder.setNeutralButton("OK", (dialog, which) -> dialog.cancel());
+            AlertDialog alertPopup = builder.create();
+            alertPopup.show();
+            return;
+        }
+        if (connectedCustomer.getCardNo() == null || connectedCustomer.getCardNo().isEmpty()) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(CartActivity.this);
+            builder.setMessage("ERROR\nNo card connected to account\nGo to Account Settings to add cardNo");
+            builder.setCancelable(true);
+            builder.setNeutralButton("OK", (dialog, which) -> dialog.cancel());
+            AlertDialog alertPopup = builder.create();
+            alertPopup.show();
+            return;
+        }
 
         Cart tempCart = cart;
         tempCart.setStatus("Paid");

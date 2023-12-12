@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import com.androidapp.entities.Customer;
+import com.androidapp.entities.Product;
 import com.androidapp.helpers.Rest;
 import com.androidapp.jsonserializers.LocalDateSerializer;
 import com.google.gson.Gson;
@@ -24,89 +25,41 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import java.util.regex.Pattern;
 
-import static com.androidapp.helpers.Constants.*;
+import static com.androidapp.helpers.Constants.ADD_CUSTOMER;
+import static com.androidapp.helpers.Constants.UPDATE_CUSTOMER;
 
-public class SettingsActivity extends AppCompatActivity {
-    Customer connectedCustomer;
+public class RegisterActivity extends AppCompatActivity {
     List<Customer> allCustomers;
-
     @SuppressLint("NewApi")
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_settings);
+        setContentView(R.layout.activity_register);
 
         Intent intent = getIntent();
         String customersInfo = intent.getStringExtra("customerObject");
-        int id = intent.getIntExtra("id",0);
-        if (id == 0) System.out.println("ERROR WRONG ID");
-
         GsonBuilder builder = new GsonBuilder();
         builder.registerTypeAdapter(LocalDate.class, new LocalDateSerializer());
         Gson customerGson = builder.create();
         Type customersListType = new TypeToken<List<Customer>>(){}.getType();
         allCustomers = customerGson.fromJson(customersInfo, customersListType);
-        for (Customer customer: allCustomers) {
-            if (customer.getId() == id) {
-                connectedCustomer = customer;
-                break;
-            }
-        }
-        System.out.println("Settings page");
-        System.out.println(connectedCustomer);
-
-        TextView name = findViewById(R.id.name);
-        TextView surname = findViewById(R.id.surname);
-        TextView username = findViewById(R.id.username);
-        TextView gmail = findViewById(R.id.email);
-        TextView birthDate = findViewById(R.id.birthDate);
-        TextView cardNo = findViewById(R.id.cardNo);
-
-        name.setText(connectedCustomer.getName());
-        surname.setText(connectedCustomer.getSurname());
-        username.setText(connectedCustomer.getUsername());
-        gmail.setText(connectedCustomer.getGmail());
-        birthDate.setText(connectedCustomer.getBirthDate().toString());
-        cardNo.setText(connectedCustomer.getCardNo());
     }
 
-    public void openMenuPageFromSettings(View view) {
-        Executor executor = Executors.newSingleThreadExecutor();
-        Handler handler = new Handler(Looper.getMainLooper());
-
-        executor.execute(() -> {
-            try {
-                String response = Rest.sendGet(GET_CUSTOMER_BY_ID + connectedCustomer.getId());
-                System.out.println(response);
-                handler.post(() -> {
-                    try {
-                        if (!response.equals("Error")) {
-                            Intent intent = new Intent(SettingsActivity.this, MenuActivity.class);
-                            intent.putExtra("customerObject", response);
-                            startActivity(intent);
-                        } else {
-                            System.out.println("Error");
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                });
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
+    public void goToLoginPage(View view) {
+        Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+        startActivity(intent);
     }
 
     @SuppressLint("NewApi")
-    public void saveChanges(View view) {
-        TextView name = findViewById(R.id.name);
-        TextView surname = findViewById(R.id.surname);
-        TextView username = findViewById(R.id.username);
-        TextView newPassword = findViewById(R.id.newPassword);
-        TextView newPasswordR = findViewById(R.id.newPasswordR);
-        TextView gmail = findViewById(R.id.email);
-        TextView birthDate = findViewById(R.id.birthDate);
-        TextView cardNo = findViewById(R.id.cardNo);
+    public void register(View view) {
+        TextView name = findViewById(R.id.name2);
+        TextView surname = findViewById(R.id.surname2);
+        TextView username = findViewById(R.id.username2);
+        TextView newPassword = findViewById(R.id.newPassword2);
+        TextView newPasswordR = findViewById(R.id.newPasswordR2);
+        TextView gmail = findViewById(R.id.email2);
+        TextView birthDate = findViewById(R.id.birthDate2);
+        TextView cardNo = findViewById(R.id.cardNo2);
 
         String alertText = "ERROR\n";
         boolean check = false;
@@ -123,7 +76,7 @@ public class SettingsActivity extends AppCompatActivity {
             check = true;
         }
         for (Customer customer : allCustomers) {
-            if (customer.getUsername().equals(username.getText().toString()) && !connectedCustomer.getUsername().equals(username.getText().toString())) {
+            if (customer.getUsername().equals(username.getText().toString())) {
                 alertText += "Username already exist\n";
                 check = true;
                 break;
@@ -133,8 +86,8 @@ public class SettingsActivity extends AppCompatActivity {
                 break;
             }
         }
-        if (!newPassword.getText().toString().equals(newPasswordR.getText().toString())) {
-            alertText += "Passwords do not match\n";
+        if (!newPassword.getText().toString().equals(newPasswordR.getText().toString()) || newPassword.getText().toString().isEmpty()) {
+            alertText += "Passwords do not match or are empty\n";
             check = true;
         }
         if (gmail.getText().toString().isEmpty()) {
@@ -157,7 +110,7 @@ public class SettingsActivity extends AppCompatActivity {
         }
 
         if (check) {
-            AlertDialog.Builder alert = new AlertDialog.Builder(SettingsActivity.this);
+            AlertDialog.Builder alert = new AlertDialog.Builder(RegisterActivity.this);
             alert.setMessage(alertText);
             alert.setCancelable(true);
             alert.setNeutralButton("OK", (dialog, which) -> dialog.cancel());
@@ -166,26 +119,14 @@ public class SettingsActivity extends AppCompatActivity {
             return;
         }
 
-        if (!newPassword.getText().toString().equals(newPasswordR.getText().toString())) {
-            AlertDialog.Builder alert = new AlertDialog.Builder(SettingsActivity.this);
-            alert.setMessage("ERROR\nPasswords do not match");
-            alert.setCancelable(true);
-            alert.setNeutralButton("OK", (dialog, which) -> dialog.cancel());
-            AlertDialog alertPopup = alert.create();
-            alertPopup.show();
-            return;
-        }
-
-        Customer customer = connectedCustomer;
-        customer.setName(name.getText().toString());
-        customer.setSurname(surname.getText().toString());
-        customer.setUsername(username.getText().toString());
-        if (!newPassword.getText().toString().isEmpty()) {
-            customer.setPassword(newPassword.getText().toString());
-        }
-        customer.setGmail(gmail.getText().toString());
-        customer.setBirthDate(LocalDate.parse(birthDate.getText().toString()));
-        customer.setCardNo(cardNo.getText().toString());
+        Customer customer = new Customer(
+                username.getText().toString(),
+                newPassword.getText().toString(),
+                name.getText().toString(),
+                surname.getText().toString(),
+                gmail.getText().toString(),
+                LocalDate.parse(birthDate.getText().toString()),
+                cardNo.getText().toString());
 
         GsonBuilder builder = new GsonBuilder();
         builder.registerTypeAdapter(LocalDate.class, new LocalDateSerializer());
@@ -198,14 +139,14 @@ public class SettingsActivity extends AppCompatActivity {
 
         executor.execute(()->{
             try {
-                String response = Rest.sendPut(UPDATE_CUSTOMER, customerInfo);
+                String response = Rest.sendPost(ADD_CUSTOMER, customerInfo);
                 System.out.println(response);
                 handler.post(()->{
                     try {
                         if (!response.equals("Error")) {
                             System.out.println(customerGson.fromJson(response, Customer.class));
-                            AlertDialog.Builder alert = new AlertDialog.Builder(SettingsActivity.this);
-                            alert.setMessage("Updated customer information");
+                            AlertDialog.Builder alert = new AlertDialog.Builder(RegisterActivity.this);
+                            alert.setMessage("Customer account created");
                             alert.setCancelable(true);
                             alert.setNeutralButton("OK", (dialog, which) -> dialog.cancel());
                             AlertDialog alertPopup = alert.create();

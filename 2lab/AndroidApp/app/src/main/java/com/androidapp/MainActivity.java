@@ -114,4 +114,32 @@ public class MainActivity extends AppCompatActivity {
             System.out.println("Vygdo");
         }
     }
+
+    public void goToRegisterPage(View view) {
+        Executor executor = Executors.newSingleThreadExecutor();
+        Handler handler = new Handler(Looper.getMainLooper());
+
+        executor.execute(()->{
+            try {
+                String response = Rest.sendGet(GET_ALL_CUSTOMERS);
+                System.out.println(response);
+                handler.post(()->{
+                    try {
+                        if (!response.equals("Error")) {
+                            Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
+                            intent.putExtra("customerObject", response);
+                            startActivity(intent);
+                        }
+                        else {
+                            System.out.println("Wrong username or password");
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                });
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+    }
 }
