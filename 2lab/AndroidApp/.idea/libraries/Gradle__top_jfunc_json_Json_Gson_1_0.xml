@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="Gradle: top.jfunc.json:Json-Gson:1.0" type="java-imported" external-system-id="GRADLE">
+    <properties groupId="top.jfunc.json" artifactId="Json-Gson" version="1.0" />
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/top.jfunc.json/Json-Gson/1.0/c9beb9513cdb8445e23eec7eb38d2d7e598a00b7/Json-Gson-1.0.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/top.jfunc.json/Json-Gson/1.0/67a392544127e0fbf99c81abb852353f4f41b05e/Json-Gson-1.0-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/top.jfunc.json/Json-Gson/1.0/495be4f094c2a0cdf16866db4e669414ab422817/Json-Gson-1.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
