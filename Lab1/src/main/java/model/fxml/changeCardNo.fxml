@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="146.0" prefWidth="234.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="model.controllers.ChangeCardNoController">
+   <children>
+      <TextField fx:id="newCardNo" layoutX="40.0" layoutY="55.0" prefHeight="24.0" prefWidth="157.0" promptText="CardNo (xxxx-xxxx-xxxx-xxxx)">
+         <font>
+            <Font size="11.0" />
+         </font></TextField>
+      <Button layoutX="92.0" layoutY="97.0" mnemonicParsing="false" onAction="#change" text="Confirm" />
+      <Text layoutX="40.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="New CardNo:">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Text>
+      <Text layoutX="40.0" layoutY="47.0" strokeType="OUTSIDE" strokeWidth="0.0" text="(xxxx-xxxx-xxxx-xxxx)" />
+   </children>
+</AnchorPane>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="430.0" prefWidth="677.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="model.controllers.ManagerController">
+   <children>
+       <TableView fx:id="table" layoutX="14.0" layoutY="34.0" prefHeight="326.0" prefWidth="465.0">
+           <columns>
+               <TableColumn fx:id="name" prefWidth="153.0" text="Name" />
+               <TableColumn fx:id="type" prefWidth="83.0" text="Type" />
+               <TableColumn fx:id="warranty" prefWidth="103.0" text="Warranty" />
+               <TableColumn fx:id="price" prefWidth="125.0" text="Price" />
+           </columns>
+       </TableView>
+       <ComboBox fx:id="types" layoutX="166.0" layoutY="376.0" prefHeight="25.0" prefWidth="84.0" value="Bike" />
+      <Text layoutX="14.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="All Items:">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Text>
+      <TextField fx:id="newName" layoutX="14.0" layoutY="376.0" promptText="name" />
+      <TextField fx:id="newWarranty" layoutX="257.0" layoutY="376.0" prefHeight="25.0" prefWidth="98.0" promptText="warranty" />
+      <TextField fx:id="newPrice" layoutX="361.0" layoutY="376.0" prefHeight="25.0" prefWidth="117.0" promptText="unit price" />
+      <Button layoutX="523.0" layoutY="358.0" mnemonicParsing="false" onAction="#createNewProduct" text="Add Item">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Button>
+      <Button layoutX="543.0" layoutY="19.0" mnemonicParsing="false" onAction="#logout" text="Logout">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Button>
+      <Button layoutX="513.0" layoutY="197.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="130.0" onAction="#deleteItem" text="Delete Item">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Button>
+      <Button layoutX="509.0" layoutY="277.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="139.0" onAction="#updateItem" text="Update Item">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>

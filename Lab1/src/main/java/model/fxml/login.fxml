@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="450.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="model.controllers.LoginController">
+   <children>
+      <PasswordField fx:id="loginPass" layoutX="90.0" layoutY="107.0" promptText="password" />
+      <TextField fx:id="loginName" layoutX="90.0" layoutY="66.0" promptText="nickname" />
+      <Text layoutX="142.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Login">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <Text layoutX="381.0" layoutY="47.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Register">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <PasswordField fx:id="registerPass" layoutX="339.0" layoutY="107.0" prefHeight="25.0" prefWidth="155.0" promptText="password" />
+      <TextField fx:id="registerName" layoutX="339.0" layoutY="66.0" prefHeight="25.0" prefWidth="155.0" promptText="nickname" />
+      <PasswordField fx:id="registerPassR" layoutX="340.0" layoutY="149.0" prefHeight="25.0" prefWidth="155.0" promptText="repeat password" />
+      <Button layoutX="141.0" layoutY="155.0" mnemonicParsing="false" onAction="#login" text="Login" />
+      <Button layoutX="387.0" layoutY="391.0" mnemonicParsing="false" onAction="#createNewCustomer" text="Register" />
+      <TextField fx:id="name" layoutX="340.0" layoutY="190.0" prefHeight="25.0" prefWidth="155.0" promptText="first name" />
+      <TextField fx:id="surname" layoutX="339.0" layoutY="232.0" prefHeight="25.0" prefWidth="155.0" promptText="last name" />
+      <TextField fx:id="birthdate" layoutX="339.0" layoutY="307.0" prefHeight="25.0" prefWidth="155.0" promptText="birth date (YYYY-MM-DD)" />
+      <TextField fx:id="cardNo" layoutX="339.0" layoutY="346.0" prefHeight="25.0" prefWidth="155.0" promptText="cardNo (xxxx-xxxx-xxxx-xxxx)">
+         <font>
+            <Font size="11.0" />
+         </font></TextField>
+      <TextField fx:id="gmail" layoutX="339.0" layoutY="269.0" prefHeight="25.0" prefWidth="155.0" promptText="gmail" />
+   </children>
+</AnchorPane>
