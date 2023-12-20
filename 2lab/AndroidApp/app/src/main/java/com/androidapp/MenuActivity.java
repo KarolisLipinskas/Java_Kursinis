@@ -7,7 +7,6 @@ import android.os.Handler;
 import android.os.Looper;
 import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
-import com.androidapp.entities.Cart;
 import com.androidapp.entities.Customer;
 import com.androidapp.helpers.Rest;
 import com.androidapp.jsonserializers.LocalDateSerializer;

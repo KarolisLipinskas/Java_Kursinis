@@ -10,7 +10,6 @@ import android.widget.TextView;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import com.androidapp.entities.Customer;
-import com.androidapp.entities.Product;
 import com.androidapp.helpers.Rest;
 import com.androidapp.jsonserializers.LocalDateSerializer;
 import com.google.gson.Gson;
@@ -26,7 +25,6 @@ import java.util.concurrent.Executors;
 import java.util.regex.Pattern;
 
 import static com.androidapp.helpers.Constants.ADD_CUSTOMER;
-import static com.androidapp.helpers.Constants.UPDATE_CUSTOMER;
 
 public class RegisterActivity extends AppCompatActivity {
     List<Customer> allCustomers;
