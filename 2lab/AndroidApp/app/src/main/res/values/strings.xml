@@ -1,0 +1,31 @@
+<resources>
+    <string name="app_name">AndroidApp</string>
+    <string name="login_button_label">Login</string>
+    <string name="password_label">Enter password</string>
+    <string name="name_label">Enter name</string>
+    <string name="products_button_label">Browse Products</string>
+    <string name="cart_button_label">Your Cart</string>
+    <string name="settings_button_label">Account Settings</string>
+    <string name="logout_button_label">Logout</string>
+    <string name="menu_button_label">Menu</string>
+    <string name="price_label">Price:</string>
+    <string name="priceMin_label">min</string>
+    <string name="priceMax_label">max</string>
+    <string name="filter_button_label">Filter</string>
+    <string name="add_button_label">Add To Cart</string>
+    <string name="type_selection_label">Types</string>
+    <string name="status_label">Status:</string>
+    <string name="checkout_button_label">Checkout</string>
+    <string name="remove_item_button_label">Remove Item</string>
+    <string name="delete_cart_button_label">Delete Cart</string>
+    <string name="new_pass_label">New Password</string>
+    <string name="new_passr_label">Repeat Password</string>
+    <string name="name_S_label">Name</string>
+    <string name="surname_label">Surname</string>
+    <string name="username_label">Username</string>
+    <string name="email_label">Email</string>
+    <string name="birth_label">BirthDay</string>
+    <string name="card_label">Card No</string>
+    <string name="save_button_label">Save Changes</string>
+    <string name="register_button_label">Register</string>
+</resources>
