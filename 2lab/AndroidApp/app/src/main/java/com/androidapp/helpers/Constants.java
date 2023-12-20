@@ -1,7 +1,7 @@
 package com.androidapp.helpers;
 
 public class Constants {
-    public static final String BASE_URL = "http://192.168.43.74:8080";
+    public static final String BASE_URL = "http://192.168.1.223:8080";
     public static final String GET_ALL_CUSTOMERS = BASE_URL + "/getAllCustomers";
     public static final String GET_CUSTOMER_BY_LOGIN = BASE_URL + "/getCustomerByLogin";
     public static final String GET_ALL_PRODUCTS = BASE_URL + "/getAllProducts";
