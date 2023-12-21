@@ -26,4 +26,12 @@ public abstract class Comment {
     public void setText(String text) {
         this.text = text;
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 }

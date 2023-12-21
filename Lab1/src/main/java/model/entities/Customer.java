@@ -1,6 +1,7 @@
 package model.entities;
 
 import model.HibernateCart;
+import model.HibernateCartComments;
 import model.HibernateCustomer;
 import model.HibernateProduct;
 
@@ -73,14 +74,14 @@ public class Customer extends User {
         hibernateCustomer.update(this);
     }
 
-    public void removeCustomer(HibernateCustomer hibernateCustomer, HibernateCart hibernateCart, HibernateProduct hibernateProduct) {
-        removeAllCarts(hibernateCart, hibernateProduct);
+    public void removeCustomer(HibernateCustomer hibernateCustomer, HibernateCart hibernateCart, HibernateProduct hibernateProduct, HibernateCartComments hibernateCartComments) {
+        removeAllCarts(hibernateCart, hibernateProduct, hibernateCartComments);
         hibernateCustomer.delete(this);
     }
 
-    public void removeAllCarts(HibernateCart hibernateCart, HibernateProduct hibernateProduct) {
+    public void removeAllCarts(HibernateCart hibernateCart, HibernateProduct hibernateProduct, HibernateCartComments hibernateCartComments) {
         for (Cart cart : cartList) {
-            cart.removeCart(hibernateCart, hibernateProduct);
+            cart.removeCart(hibernateCart, hibernateProduct, hibernateCartComments);
         }
     }
 

@@ -5,13 +5,16 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import model.HibernateAdministrator;
-import model.entities.Administrator;
-import model.entities.Customer;
 import model.HibernateCustomer;
 import model.HibernateManager;
+import model.entities.Administrator;
+import model.entities.Customer;
 import model.entities.Manager;
 
 import javax.persistence.EntityManagerFactory;
@@ -22,9 +25,8 @@ import java.time.LocalDate;
 import java.util.ResourceBundle;
 import java.util.regex.Pattern;
 
-public class LoginController implements Initializable {
-    public TextField loginName;
-    public PasswordField loginPass;
+public class AdminController implements Initializable {
+    public ComboBox<String> userType;
     public TextField registerName;
     public PasswordField registerPass;
     public PasswordField registerPassR;
@@ -32,7 +34,6 @@ public class LoginController implements Initializable {
     public TextField surname;
     public TextField gmail;
     public TextField birthdate;
-    public TextField cardNo;
 
     EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("kl_kursinis");
     HibernateCustomer hibernateCustomer = new HibernateCustomer(entityManagerFactory);
@@ -40,20 +41,26 @@ public class LoginController implements Initializable {
     HibernateAdministrator hibernateAdministrator = new HibernateAdministrator(entityManagerFactory);
 
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) { }
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        userType.getItems().addAll("Administrator", "Manager");
+    }
 
-    public void createNewCustomer() {
+    public void registerNewUser(ActionEvent actionEvent) {
         if (!checkInput()) return;
-        Customer customer = new Customer(
+        if (userType.getValue().equals("Administrator")) createNewAdmin();
+        else if (userType.getValue().equals("Manager")) createNewManager();
+    }
+
+    public void createNewManager() {
+        Manager manager = new Manager(
                 registerName.getText(),
                 registerPass.getText(),
                 name.getText(),
                 surname.getText(),
                 gmail.getText(),
-                LocalDate.parse(birthdate.getText()),
-                cardNo.getText());
+                LocalDate.parse(birthdate.getText()));
 
-        hibernateCustomer.create(customer);
+        hibernateManager.create(manager);
 
         registerName.clear();
         registerPass.clear();
@@ -62,10 +69,33 @@ public class LoginController implements Initializable {
         surname.clear();
         gmail.clear();
         birthdate.clear();
-        cardNo.clear();
 
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setContentText("Account created");
+        alert.setContentText("New manager account created");
+        alert.show();
+    }
+
+    public void createNewAdmin() {
+        Administrator administrator = new Administrator(
+                registerName.getText(),
+                registerPass.getText(),
+                name.getText(),
+                surname.getText(),
+                gmail.getText(),
+                LocalDate.parse(birthdate.getText()));
+
+        hibernateAdministrator.create(administrator);
+
+        registerName.clear();
+        registerPass.clear();
+        registerPassR.clear();
+        name.clear();
+        surname.clear();
+        gmail.clear();
+        birthdate.clear();
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setContentText("New administrator account created");
         alert.show();
     }
 
@@ -142,11 +172,6 @@ public class LoginController implements Initializable {
             alertText += "- wrong date\n";
         }
 
-        if (!cardNo.getText().isEmpty() && !Pattern.matches("[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{4}", cardNo.getText())) {  //cardNo check
-            check = false;
-            alertText += "- wrong cardNo\n";
-        }
-
         //Error alert
         if(!check) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -157,72 +182,24 @@ public class LoginController implements Initializable {
         return check;
     }
 
-    public void login(ActionEvent actionEvent) throws IOException {
-        Customer customer = hibernateCustomer.getCustomer(loginName.getText(), loginPass.getText());
-        Manager manager = hibernateManager.getManager(loginName.getText(), loginPass.getText());
-        Administrator administrator = hibernateAdministrator.getAdmin(loginName.getText(), loginPass.getText());
-        if (customer != null) {
-            openMainWindow(customer);
-        }
-        else if (manager != null) {
-            openManagerWindow(manager);
-        }
-        else if (administrator != null) {
-            openAdminWindow();
-        }
-        else {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("Wrong nickname or password");
-            alert.show();
-        }
+    public void logout(ActionEvent actionEvent) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxml/login.fxml"));
+        Stage cartWindow = getStage(loader, "Login screen");
+
+        cartWindow.show();
+        closeStage();
     }
 
-    public void openMainWindow(Customer customer) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxml/main.fxml"));
+    public Stage getStage(FXMLLoader loader ,String title) throws IOException {
         Parent root = loader.load();
-
-        Stage mainWindow = new Stage();
-        mainWindow.setTitle("Main page");
-        mainWindow.setScene(new Scene(root));
-
-        MainController mainController = loader.getController();
-        mainController.initData(Integer.toString(customer.getId()));
-
-        mainWindow.show();
-
-        Stage stage = (Stage) loginName.getScene().getWindow();
-        stage.close();
+        Stage window = new Stage();
+        window.setTitle(title);
+        window.setScene(new Scene(root));
+        return window;
     }
 
-    public void openManagerWindow(Manager manager) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxml/manager.fxml"));
-        Parent root = loader.load();
-
-        Stage managerWindow = new Stage();
-        managerWindow.setTitle("Products page");
-        managerWindow.setScene(new Scene(root));
-
-        ManagerController managerController = loader.getController();
-        System.out.println(manager.getId());
-        managerController.initData(Integer.toString(manager.getId()));
-
-        managerWindow.show();
-
-        Stage stage = (Stage) loginName.getScene().getWindow();
-        stage.close();
-    }
-
-    public void openAdminWindow() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxml/admin.fxml"));
-        Parent root = loader.load();
-
-        Stage adminWindow = new Stage();
-        adminWindow.setTitle("Administrator page");
-        adminWindow.setScene(new Scene(root));
-
-        adminWindow.show();
-
-        Stage stage = (Stage) loginName.getScene().getWindow();
+    public void closeStage() {
+        Stage stage = (Stage) registerName.getScene().getWindow();
         stage.close();
     }
 }

@@ -6,7 +6,26 @@
 
 <AnchorPane prefHeight="430.0" prefWidth="677.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="model.controllers.ManagerController">
    <children>
-       <TableView fx:id="table" layoutX="14.0" layoutY="34.0" prefHeight="326.0" prefWidth="465.0">
+       <MenuBar layoutX="6.0" layoutY="8.0">
+           <menus>
+               <Menu mnemonicParsing="false" text="Products">
+                   <items>
+                       <MenuItem mnemonicParsing="false" text="Open" />
+                   </items></Menu>
+               <Menu mnemonicParsing="false" text="Orders">
+                   <items>
+                       <MenuItem mnemonicParsing="false" onAction="#openOrdersWindow" text="Open" />
+                   </items></Menu>
+               <Menu mnemonicParsing="false" text="Account">
+                   <items>
+                       <MenuItem mnemonicParsing="false" text="Settings" />
+                       <SeparatorMenuItem mnemonicParsing="false" />
+                       <MenuItem mnemonicParsing="false" onAction="#logout" text="Logout" />
+                   </items>
+               </Menu>
+           </menus>
+       </MenuBar>
+       <TableView fx:id="table" layoutX="14.0" layoutY="82.0" prefHeight="278.0" prefWidth="465.0">
            <columns>
                <TableColumn fx:id="name" prefWidth="153.0" text="Name" />
                <TableColumn fx:id="type" prefWidth="83.0" text="Type" />
@@ -15,7 +34,7 @@
            </columns>
        </TableView>
        <ComboBox fx:id="types" layoutX="166.0" layoutY="376.0" prefHeight="25.0" prefWidth="84.0" value="Bike" />
-      <Text layoutX="14.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="All Items:">
+      <Text layoutX="14.0" layoutY="77.0" strokeType="OUTSIDE" strokeWidth="0.0" text="All Items:">
          <font>
             <Font size="15.0" />
          </font>
@@ -33,15 +52,16 @@
             <Font size="15.0" />
          </font>
       </Button>
-      <Button layoutX="513.0" layoutY="197.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="130.0" onAction="#deleteItem" text="Delete Item">
+      <Button layoutX="513.0" layoutY="197.0" mnemonicParsing="false" onAction="#deleteItem" prefHeight="44.0" prefWidth="130.0" text="Delete Item">
          <font>
             <Font size="20.0" />
          </font>
       </Button>
-      <Button layoutX="509.0" layoutY="277.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="139.0" onAction="#updateItem" text="Update Item">
+      <Button layoutX="509.0" layoutY="277.0" mnemonicParsing="false" onAction="#updateItem" prefHeight="44.0" prefWidth="139.0" text="Update Item">
          <font>
             <Font size="20.0" />
          </font>
       </Button>
+      <Label fx:id="managerId" layoutX="361.0" layoutY="26.0" text="manager" visible="false" />
    </children>
 </AnchorPane>

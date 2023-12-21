@@ -9,6 +9,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import model.HibernateCartComments;
 import model.entities.Customer;
 import model.HibernateCart;
 import model.HibernateCustomer;
@@ -41,6 +42,7 @@ public class SettingsController implements Initializable {
     HibernateCustomer hibernateCustomer = new HibernateCustomer(entityManagerFactory);
     HibernateCart hibernateCart = new HibernateCart(entityManagerFactory);
     HibernateProduct hibernateProduct = new HibernateProduct(entityManagerFactory);
+    HibernateCartComments hibernateCartComments = new HibernateCartComments(entityManagerFactory);
 
     List<Stage> tempWindows = new ArrayList<>();
 
@@ -121,7 +123,7 @@ public class SettingsController implements Initializable {
 
     public void deleteAccount() throws IOException {
         Customer customer = hibernateCustomer.getCustomer(customerId.getText());
-        customer.removeCustomer(hibernateCustomer, hibernateCart, hibernateProduct);
+        customer.removeCustomer(hibernateCustomer, hibernateCart, hibernateProduct, hibernateCartComments);
         logout(null);
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setContentText("Account deleted successfully");

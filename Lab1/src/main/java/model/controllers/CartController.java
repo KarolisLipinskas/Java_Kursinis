@@ -22,6 +22,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -42,6 +43,7 @@ public class CartController implements Initializable {
     HibernateCustomer hibernateCustomer = new HibernateCustomer(entityManagerFactory);
     HibernateProduct hibernateProduct = new HibernateProduct(entityManagerFactory);
     HibernateCart hibernateCart = new HibernateCart(entityManagerFactory);
+    HibernateCartComments hibernateCartComments = new HibernateCartComments(entityManagerFactory);
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) { }
@@ -137,11 +139,23 @@ public class CartController implements Initializable {
         if (status.getText().equals("open")) {
             Customer customer = hibernateCustomer.getCustomer(customerId.getText());
             Cart cart = getLastCart(customer);
-            cart.removeCart(hibernateCart, hibernateProduct);
+            cart.removeCart(hibernateCart, hibernateProduct, hibernateCartComments);
 
             status.setText("-");
             totalPrice.setText("-");
             loadData(null);
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setContentText("Order deleted successfully");
+            alert.show();
+        }
+        else if (status.getText().equals("Paid") || status.getText().equals("Processing")) {
+            Customer customer = hibernateCustomer.getCustomer(customerId.getText());
+            Cart cart = getLastCart(customer);
+            cart.setStatus("Canceled");
+            cart.setUpdateDate(LocalDateTime.now());
+            cart.updateCart(hibernateCart);
+            loadData(cart);
 
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setContentText("Order canceled successfully");
@@ -176,12 +190,32 @@ public class CartController implements Initializable {
         }
         Cart cart = getLastCart(customer);
         cart.setStatus("Paid");
+        cart.setUpdateDate(LocalDateTime.now());
         cart.updateCart(hibernateCart);
         loadData(cart);
 
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setContentText("Order purchased successfully");
         alert.show();
+    }
+
+    public void openCartCommentsWindow(ActionEvent actionEvent) throws IOException {
+        Customer customer = hibernateCustomer.getCustomer(customerId.getText());
+        Cart cart = getLastCart(customer);
+        if (cart == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Order must be with status");
+            alert.show();
+            return;
+        }
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxml/cartComments.fxml"));
+        Stage promptWindow = getStage(loader, "Cart comments page");
+
+        CartCommentsController cartCommentsController = loader.getController();
+        cartCommentsController.initData(customerId.getId(), Integer.toString(cart.getId()));
+
+        promptWindow.show();
     }
 
     public void openMainWindow(ActionEvent actionEvent) throws IOException {

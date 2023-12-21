@@ -73,5 +73,6 @@
          </font>
       </Label>
       <Label fx:id="customerId" layoutX="438.0" layoutY="25.0" text="id" visible="false" />
+      <Button layoutX="502.0" layoutY="63.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="113.0" onAction="#openCartCommentsWindow" text="View comments" />
    </children>
 </AnchorPane>

@@ -33,6 +33,8 @@ public class ManagerController implements Initializable {
     public TableColumn<ProductTableParameters, String> price;
     private ObservableList<ProductTableParameters> data = FXCollections.observableArrayList();
 
+    public Label managerId;
+
     EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("kl_kursinis");
     HibernateProduct hibernateProduct = new HibernateProduct(entityManagerFactory);
 
@@ -41,6 +43,10 @@ public class ManagerController implements Initializable {
         System.out.println("manager window");
         types.getItems().addAll("Bike", "Brakes", "Fork", "Frame", "Handlebars", "Pedals", "Shock", "Wheels");
         loadTable();
+    }
+
+    public void initData(String id) {
+        managerId.setText(id);
     }
 
     public void loadTable() {
@@ -185,6 +191,17 @@ public class ManagerController implements Initializable {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setContentText("Item deleted");
         alert.show();
+    }
+
+    public void openOrdersWindow(ActionEvent actionEvent) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxml/allOrdersManager.fxml"));
+        Stage ordersWindow = getStage(loader, "Orders page");
+
+        AllOrdersController allOrdersController = loader.getController();
+        allOrdersController.initData(managerId.getText());
+
+        ordersWindow.show();
+        closeStage();
     }
 
     public void logout(ActionEvent actionEvent) throws IOException {

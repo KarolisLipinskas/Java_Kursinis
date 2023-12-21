@@ -1,6 +1,6 @@
 package model;
 
-import model.entities.Manager;
+import model.entities.Administrator;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -8,10 +8,10 @@ import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaQuery;
 import java.util.List;
 
-public class HibernateManager {
+public class HibernateAdministrator {
     private EntityManagerFactory emf = null;
 
-    public HibernateManager(EntityManagerFactory entityManagerFactory) {
+    public HibernateAdministrator(EntityManagerFactory entityManagerFactory) {
         this.emf = entityManagerFactory;
     }
 
@@ -19,12 +19,12 @@ public class HibernateManager {
         return emf.createEntityManager();
     }
 
-    public void create(Manager manager) {
+    public void create(Administrator administrator) {
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            em.persist(em.merge(manager));
+            em.persist(em.merge(administrator));
             em.getTransaction().commit();
         } catch (Exception e) {
             e.printStackTrace();
@@ -35,11 +35,11 @@ public class HibernateManager {
         }
     }
 
-    public List<Manager> getAllManagers() {
+    public List<Administrator> getAllAdmins() {
         EntityManager em = getEntityManager();
         try {
             CriteriaQuery criteriaQuery = em.getCriteriaBuilder().createQuery();
-            criteriaQuery.select(criteriaQuery.from(Manager.class));
+            criteriaQuery.select(criteriaQuery.from(Administrator.class));
             Query query = em.createQuery(criteriaQuery);
             return query.getResultList();
         } catch (Exception e) {
@@ -52,21 +52,11 @@ public class HibernateManager {
         return null;
     }
 
-    public Manager getManager(String loginName, String loginPass) {
+    public Administrator getAdmin(String loginName, String loginPass) {
         EntityManager em = getEntityManager();
-        for (Manager e : getAllManagers()) {
+        for (Administrator e : getAllAdmins()) {
             //System.out.println(e.getClass().getName().substring(e.getClass().getName().lastIndexOf('.') + 1));
             if (e.getUsername().equals(loginName) && e.getPassword().equals(loginPass)) return e;
-        }
-        em.close();
-        return null;
-    }
-
-    public Manager getManager(int id) {
-        EntityManager em = getEntityManager();
-        for (Manager e : getAllManagers()) {
-            //System.out.println(e.getClass().getName().substring(e.getClass().getName().lastIndexOf('.') + 1));
-            if (e.getId() == id) return e;
         }
         em.close();
         return null;

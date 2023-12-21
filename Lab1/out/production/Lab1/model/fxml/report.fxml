@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="model.controllers.ReportController">
+   <children>
+      <Text layoutX="32.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Order amount:" />
+      <Text layoutX="32.0" layoutY="73.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total price:" />
+      <Text layoutX="32.0" layoutY="123.0" strokeType="OUTSIDE" strokeWidth="0.0" text="open order amount:" />
+      <Text layoutX="32.0" layoutY="151.0" strokeType="OUTSIDE" strokeWidth="0.0" text="open orders price:" />
+      <Text layoutX="32.0" layoutY="196.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Paid order amount:" />
+      <Text layoutX="32.0" layoutY="227.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Paid order price:" />
+      <Text layoutX="32.0" layoutY="287.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Processing order amount:" />
+      <Text layoutX="32.0" layoutY="338.0" strokeType="OUTSIDE" strokeWidth="0.0" text="In Transit order amount:" />
+      <Text layoutX="354.0" layoutY="287.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Completed orders:" />
+      <Text layoutX="354.0" layoutY="314.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Canceled orders:" />
+      <Text layoutX="354.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Urgent order amount:" />
+      <Text layoutX="354.0" layoutY="73.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Urgent order price:" />
+      <Label fx:id="orderAmount" layoutX="175.0" layoutY="32.0" text="amount1" />
+      <Label fx:id="orderPrice" layoutX="176.0" layoutY="60.0" text="price1" />
+      <Label fx:id="oOrderAmount" layoutX="175.0" layoutY="110.0" text="amount2" />
+      <Label fx:id="oOrderPrice" layoutX="175.0" layoutY="138.0" text="price2" />
+      <Label fx:id="pOrderAmount" layoutX="178.0" layoutY="183.0" text="amount3" />
+      <Label fx:id="pOrderPrice" layoutX="178.0" layoutY="214.0" text="price3" />
+      <Label fx:id="prOrderAmount" layoutX="178.0" layoutY="274.0" text="amount4" />
+      <Label fx:id="iOrderAmount" layoutX="178.0" layoutY="325.0" text="amount6" />
+      <Label fx:id="coOrderAmount" layoutX="470.0" layoutY="274.0" text="amount8" />
+      <Label fx:id="caOrderAmount" layoutX="470.0" layoutY="301.0" text="amount9" />
+      <Label fx:id="uOrderAmount" layoutX="480.0" layoutY="32.0" text="amount7" />
+      <Label fx:id="uOrderPrice" layoutX="480.0" layoutY="60.0" text="price4" />
+      <Text layoutX="32.0" layoutY="314.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Packaged order amount:" />
+      <Label fx:id="paOrderAmount" layoutX="178.0" layoutY="301.0" text="amount5" />
+      <Text layoutX="354.0" layoutY="123.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Claimed order amount:" />
+      <Text layoutX="354.0" layoutY="151.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Claimed order price:" />
+      <Label fx:id="cOrderAmount" layoutX="483.0" layoutY="110.0" text="Label1" />
+      <Label fx:id="cOrderPrice" layoutX="483.0" layoutY="138.0" text="Label2" />
+   </children>
+</AnchorPane>

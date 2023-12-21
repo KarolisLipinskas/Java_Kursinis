@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="450.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="model.controllers.AdminController">
+   <children>
+      <Text layoutX="268.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Register">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <PasswordField fx:id="registerPass" layoutX="333.0" layoutY="70.0" prefHeight="25.0" prefWidth="155.0" promptText="password" />
+      <TextField fx:id="registerName" layoutX="115.0" layoutY="109.0" prefHeight="25.0" prefWidth="155.0" promptText="nickname" />
+      <PasswordField fx:id="registerPassR" layoutX="333.0" layoutY="109.0" prefHeight="25.0" prefWidth="155.0" promptText="repeat password" />
+      <Button layoutX="270.0" layoutY="279.0" mnemonicParsing="false" onAction="#registerNewUser" text="Register" />
+      <TextField fx:id="name" layoutX="115.0" layoutY="169.0" prefHeight="25.0" prefWidth="155.0" promptText="first name" />
+      <TextField fx:id="surname" layoutX="333.0" layoutY="169.0" prefHeight="25.0" prefWidth="155.0" promptText="last name" />
+      <TextField fx:id="birthdate" layoutX="333.0" layoutY="213.0" prefHeight="25.0" prefWidth="155.0" promptText="birth date (YYYY-MM-DD)" />
+      <TextField fx:id="gmail" layoutX="115.0" layoutY="213.0" prefHeight="25.0" prefWidth="155.0" promptText="gmail" />
+      <Button layoutX="508.0" layoutY="29.0" mnemonicParsing="false" onAction="#logout" text="Logout" />
+      <ComboBox fx:id="userType" layoutX="115.0" layoutY="70.0" prefHeight="25.0" prefWidth="155.0" value="Administrator" />
+   </children>
+</AnchorPane>
