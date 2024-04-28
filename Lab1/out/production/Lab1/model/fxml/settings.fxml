@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="677.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="model.controllers.SettingsController">
+   <children>
+       <MenuBar layoutX="6.0" layoutY="8.0">
+           <menus>
+               <Menu mnemonicParsing="false" text="Main page">
+                   <items>
+                       <MenuItem mnemonicParsing="false" onAction="#openMainWindow" text="Open" />
+                   </items></Menu>
+               <Menu mnemonicParsing="false" text="Cart">
+                   <items>
+                       <MenuItem mnemonicParsing="false" onAction="#openCartWindow" text="Open" />
+                   </items></Menu>
+               <Menu mnemonicParsing="false" text="Account">
+                   <items>
+                       <MenuItem mnemonicParsing="false" text="Settings" />
+                       <MenuItem mnemonicParsing="false" onAction="#openOrderListWindow" text="Order history" />
+                       <SeparatorMenuItem mnemonicParsing="false" />
+                       <MenuItem mnemonicParsing="false" onAction="#logout" text="Logout" />
+                   </items>
+               </Menu>
+           </menus>
+       </MenuBar>
+      <Text layoutX="46.0" layoutY="80.0" strokeType="OUTSIDE" strokeWidth="0.0" text="First name:">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Text>
+      <Text layoutX="47.0" layoutY="118.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Last name:">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Text>
+      <Text layoutX="46.0" layoutY="191.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gmail:">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Text>
+      <Text layoutX="46.0" layoutY="228.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Card number:">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Text>
+      <Text layoutX="46.0" layoutY="264.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nickname:">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Text>
+      <Text layoutX="46.0" layoutY="155.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Birth date:">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Text>
+      <Text layoutX="46.0" layoutY="298.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password:">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Text>
+      <TextField fx:id="name" layoutX="150.0" layoutY="61.0" />
+      <TextField fx:id="surname" layoutX="150.0" layoutY="99.0" />
+      <TextField fx:id="birthdate" layoutX="150.0" layoutY="136.0" />
+      <Label fx:id="gmail" layoutX="150.0" layoutY="174.0" text="gmail">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Button layoutX="339.0" layoutY="172.0" mnemonicParsing="false" onAction="#openChangeGmail" text="Change gmail" />
+      <Label fx:id="cardNo" layoutX="150.0" layoutY="211.0" text="cardNo">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Button layoutX="339.0" layoutY="209.0" mnemonicParsing="false" onAction="#openChangeCardNo" text="Change card number" />
+      <Label fx:id="loginName" layoutX="150.0" layoutY="249.0" text="nickname">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Label fx:id="loginPass" layoutX="150.0" layoutY="283.0" text="password">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Button layoutX="339.0" layoutY="245.0" mnemonicParsing="false" onAction="#openChangeNickname" text="Change nickname" />
+      <Button layoutX="339.0" layoutY="281.0" mnemonicParsing="false" onAction="#openChangePassword" text="Change password" />
+      <Button layoutX="467.0" layoutY="323.0" mnemonicParsing="false" onAction="#saveChanges" text="Save changes">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Button>
+      <Button layoutX="41.0" layoutY="339.0" mnemonicParsing="false" onAction="#loginToDelete" text="Delete account" />
+      <Label fx:id="customerId" layoutX="467.0" layoutY="33.0" text="id" visible="false" />
+      <Label fx:id="password" layoutX="150.0" layoutY="306.0" text="pass" visible="false" />
+      <Label fx:id="card" layoutX="584.0" layoutY="186.0" text="card" visible="false" />
+   </children>
+</AnchorPane>

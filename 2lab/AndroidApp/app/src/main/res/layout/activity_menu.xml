@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                   xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+                                                   android:layout_height="match_parent">
+
+    <Button
+            android:onClick="openProductsPage"
+            android:text="@string/products_button_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/productsButton"
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="144dp"
+            app:layout_constraintHorizontal_bias="0.506"/>
+    <Button
+            android:onClick="openCartPage"
+            android:text="@string/cart_button_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/cartButton"
+            app:layout_constraintTop_toBottomOf="@+id/productsButton" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginTop="68dp"
+            app:layout_constraintHorizontal_bias="0.496"/>
+    <Button
+            android:onClick="openSettingsPage"
+            android:text="@string/settings_button_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/settingsButton"
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cartButton" android:layout_marginTop="88dp"/>
+    <Button
+            android:onClick="logout"
+            android:text="@string/logout_button_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/logoutButton"
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/settingsButton" android:layout_marginTop="96dp"/>
+</androidx.constraintlayout.widget.ConstraintLayout>
