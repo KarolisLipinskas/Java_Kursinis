@@ -49,7 +49,7 @@ public class CartControllerTest {
         assertEquals("399.99", cartController.data.get(1).getPrice());
 
         // Verify total price calculation
-        assertEquals(650.48, mockCart.getPrice(), 0.00001); // Replace with expected total price logic
+        assertEquals(650.48, mockCart.getPrice(), 0.00001);
     }
 
     @Test
@@ -71,5 +71,28 @@ public class CartControllerTest {
 
         // Verify no data is added
         assertTrue(cartController.data.isEmpty());
+    }
+
+    @Test
+    public void testInitData_NoCart() {
+        cartController.initData("Test");
+
+        // Verify no data is added
+        assertTrue(cartController.data.isEmpty());
+    }
+
+    @Test
+    public void testInitData_WithCart() {
+        cartController.initData("Test", mockCart);
+
+        // Assert the data content
+        assertEquals(2, cartController.data.size());
+        assertEquals("Product1", cartController.data.get(0).getName());
+        assertEquals("Product2", cartController.data.get(1).getName());
+        assertEquals("250.49", cartController.data.get(0).getPrice());
+        assertEquals("399.99", cartController.data.get(1).getPrice());
+
+        // Verify total price calculation
+        assertEquals(650.48, mockCart.getPrice(), 0.00001);
     }
 }

@@ -48,11 +48,11 @@ public class CartController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) { }
     public void initData(String id) {
-        customerId.setText(id);
+        if(!isTest) customerId.setText(id);
         loadData(null);
     }
     public void initData(String id, Cart cart) {
-        customerId.setText(id);
+        if(!isTest) customerId.setText(id);
         loadData(cart);
     }
 
