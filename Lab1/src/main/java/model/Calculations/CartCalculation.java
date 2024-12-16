@@ -9,11 +9,10 @@ import java.util.List;
 public class CartCalculation {
     public static double calculateTotal(List<Product> products) {
         double total = 0;
-        List<Integer> quantities = calculateQuantities(new ArrayList<>(products));
-        int n = products.size();
+        List<Double> prices = calculateItemPrices(new ArrayList<>(products));
+        int n = prices.size();
         for (int i = 0; i < n; i++) {
-            Product product = products.get(i);
-            total += product.getPrice() * quantities.get(i);
+            total += prices.get(i);
         }
         total = Math.round(total * 100.0) / 100.0;
         return total;
@@ -22,9 +21,9 @@ public class CartCalculation {
     public static List<Double> calculateItemPrices(List<Product> products) {
         List<Double> result = new ArrayList<>();
         List<Integer> quantities = calculateQuantities(new ArrayList<>(products));
-        int n = products.size();
+        int n = quantities.size();
         for (int i = 0; i < n; i++) {
-            Product product = products.get(i);
+            Product product = products.get(i + quantities.get(i) - 1);
             result.add(Math.round(product.getPrice() * quantities.get(i) * 100.0) / 100.0);
         }
         return result;

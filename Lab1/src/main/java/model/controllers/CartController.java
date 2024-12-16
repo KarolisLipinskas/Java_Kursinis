@@ -111,16 +111,12 @@ public class CartController implements Initializable {
 
     public void removeItem(ActionEvent actionEvent) {
         if (!status.getText().equals("open")) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("- items can be removed only when order status is: open");
-            alert.show();
+            showAlert("- items can be removed only when order status is: open", Alert.AlertType.ERROR);
             return;
         }
         ProductTableParameters p = table.getSelectionModel().getSelectedItem();
         if (p == null) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("- no item selected");
-            alert.show();
+            showAlert("- no item selected", Alert.AlertType.ERROR);
             return;
         }
         Product product = hibernateProduct.getProduct(Integer.parseInt(p.getId()));
@@ -138,35 +134,25 @@ public class CartController implements Initializable {
             totalPrice.setText("-");
             loadData(null);
 
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setContentText("Order canceled successfully");
-            alert.show();
+            showAlert("Order canceled successfully", Alert.AlertType.INFORMATION);
         }
         else {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("- order can be canceled only when order status is: open");
-            alert.show();
+            showAlert("- order can be canceled only when order status is: open", Alert.AlertType.ERROR);
         }
     }
 
     public void checkout(ActionEvent actionEvent) {
         if (!status.getText().equals("open")) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("- order can be purchased only when order status is: open");
-            alert.show();
+            showAlert("- order can be purchased only when order status is: open", Alert.AlertType.ERROR);
             return;
         }
         if (totalPrice.getText().equals("0.0")) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("- no items in this order");
-            alert.show();
+            showAlert("- no items in this order", Alert.AlertType.ERROR);
             return;
         }
         Customer customer = hibernateCustomer.getCustomer(customerId.getText());
         if (customer.getCardNo().isEmpty()) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("- no card number found\nPlease add card number in Account -> Settings");
-            alert.show();
+            showAlert("- no card number found\nPlease add card number in Account -> Settings", Alert.AlertType.ERROR);
             return;
         }
         Cart cart = getLastCart(customer);
@@ -174,9 +160,7 @@ public class CartController implements Initializable {
         cart.updateCart(hibernateCart);
         loadData(cart);
 
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setContentText("Order purchased successfully");
-        alert.show();
+        showAlert("Order purchased successfully", Alert.AlertType.INFORMATION);
     }
 
     public void openMainWindow(ActionEvent actionEvent) throws IOException {
@@ -231,5 +215,11 @@ public class CartController implements Initializable {
     public void closeStage() {
         Stage stage = (Stage) status.getScene().getWindow();
         stage.close();
+    }
+
+    private void showAlert(String message, Alert.AlertType type) {
+        Alert alert = new Alert(type);
+        alert.setContentText(message);
+        alert.show();
     }
 }
