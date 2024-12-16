@@ -20,11 +20,14 @@ import model.entities.Product;
 
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import java.io.Console;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import static model.Calculations.CartCalculation.*;
 import static start.Main.isTest;
 
 public class CartController implements Initializable {
@@ -74,39 +77,27 @@ public class CartController implements Initializable {
         if (cart.getProducts() == null) return;
 
         if(!isTest) status.setText(cart.getStatus());
-        double total = 0;
 
+        double total = calculateTotal(new ArrayList<>(cart.getProducts()));
         List<Product> products = cart.getProducts();
-        int n = products.size();
-        while (n > 0) {
-            int quant = 1;
-            Product product = products.get(0);
-            products.remove(0);
-            n--;
-            for (int j = 0; j < n; j++) {
-                if (product.getName().equals(products.get(j).getName())
-                        && product.getType().equals(products.get(j).getType())) {
-                    quant++;
-                    products.remove(j);
-                    n--;
-                    j--;
-                }
-            }
-            total += product.getPrice() * quant;
+        List<Double> productPrices = calculateItemPrices(new ArrayList<>(cart.getProducts()));
+        List<Integer> productQuantities = calculateQuantities(new ArrayList<>(cart.getProducts()));
+        int n = productPrices.size();
+        for (int i = 0; i < n; i++) {
+            Product product = products.get(i);
 
             ProductTableParameters productTableParameters = new ProductTableParameters(
                     Integer.toString(product.getId()),
                     product.getName(),
                     product.getType(),
-                    Integer.toString(quant),
+                    Integer.toString(productQuantities.get(i)),
                     Integer.toString(product.getWarrantyYears()),
-                    Double.toString(Math.round(product.getPrice() * quant * 100.0) / 100.0));
+                    Double.toString(productPrices.get(i)));
 
             data.add(productTableParameters);
         }
         if(!isTest) table.setItems(data);
 
-        total = Math.round(total * 100.0) / 100.0;
         cart.setPrice(total);
         if(!isTest) cart.updateCart(hibernateCart);
         if(!isTest) totalPrice.setText(Double.toString(total));
