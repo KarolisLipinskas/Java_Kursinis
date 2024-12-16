@@ -25,6 +25,8 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import static start.Main.isTest;
+
 public class CartController implements Initializable {
     public Label status;
     public Label totalPrice;
@@ -34,7 +36,7 @@ public class CartController implements Initializable {
     public TableColumn<ProductTableParameters, String> quantity;
     public TableColumn<ProductTableParameters, String> warranty;
     public TableColumn<ProductTableParameters, String> price;
-    private ObservableList<ProductTableParameters> data = FXCollections.observableArrayList();
+    public ObservableList<ProductTableParameters> data = FXCollections.observableArrayList();
 
     public Label customerId;
 
@@ -55,21 +57,23 @@ public class CartController implements Initializable {
     }
 
     public void loadData(Cart cart) {
-        table.getItems().clear();
-        name.setCellValueFactory(new PropertyValueFactory<ProductTableParameters, String>("name"));
-        type.setCellValueFactory(new PropertyValueFactory<ProductTableParameters, String>("type"));
-        quantity.setCellValueFactory(new PropertyValueFactory<ProductTableParameters, String>("quantity"));
-        warranty.setCellValueFactory(new PropertyValueFactory<ProductTableParameters, String>("warranty"));
-        price.setCellValueFactory(new PropertyValueFactory<ProductTableParameters, String>("price"));
+        if(!isTest) {
+            table.getItems().clear();
+            name.setCellValueFactory(new PropertyValueFactory<ProductTableParameters, String>("name"));
+            type.setCellValueFactory(new PropertyValueFactory<ProductTableParameters, String>("type"));
+            quantity.setCellValueFactory(new PropertyValueFactory<ProductTableParameters, String>("quantity"));
+            warranty.setCellValueFactory(new PropertyValueFactory<ProductTableParameters, String>("warranty"));
+            price.setCellValueFactory(new PropertyValueFactory<ProductTableParameters, String>("price"));
 
-        if (cart == null) {
-            Customer customer = hibernateCustomer.getCustomer(customerId.getText());
-            cart = getLastCart(customer);
+            if (cart == null) {
+                Customer customer = hibernateCustomer.getCustomer(customerId.getText());
+                cart = getLastCart(customer);
+            }
         }
         if (cart == null) return;
         if (cart.getProducts() == null) return;
 
-        status.setText(cart.getStatus());
+        if(!isTest) status.setText(cart.getStatus());
         double total = 0;
 
         List<Product> products = cart.getProducts();
@@ -100,12 +104,12 @@ public class CartController implements Initializable {
 
             data.add(productTableParameters);
         }
-        table.setItems(data);
+        if(!isTest) table.setItems(data);
 
         total = Math.round(total * 100.0) / 100.0;
         cart.setPrice(total);
-        cart.updateCart(hibernateCart);
-        totalPrice.setText(Double.toString(total));
+        if(!isTest) cart.updateCart(hibernateCart);
+        if(!isTest) totalPrice.setText(Double.toString(total));
     }
 
     public Cart getLastCart(Customer customer) {
