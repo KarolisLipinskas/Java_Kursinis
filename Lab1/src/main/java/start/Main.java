@@ -11,6 +11,7 @@ import javafx.stage.Stage;
  */
 public class Main extends Application {
 
+    public static boolean isTest = false;
     @Override
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("../model/fxml/login.fxml"));

@@ -20,10 +20,15 @@ import model.entities.Product;
 
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import java.io.Console;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+
+import static model.Calculations.CartCalculation.*;
+import static start.Main.isTest;
 
 public class CartController implements Initializable {
     public Label status;
@@ -34,7 +39,7 @@ public class CartController implements Initializable {
     public TableColumn<ProductTableParameters, String> quantity;
     public TableColumn<ProductTableParameters, String> warranty;
     public TableColumn<ProductTableParameters, String> price;
-    private ObservableList<ProductTableParameters> data = FXCollections.observableArrayList();
+    public ObservableList<ProductTableParameters> data = FXCollections.observableArrayList();
 
     public Label customerId;
 
@@ -46,66 +51,56 @@ public class CartController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) { }
     public void initData(String id) {
-        customerId.setText(id);
+        if(!isTest) customerId.setText(id);
         loadData(null);
     }
     public void initData(String id, Cart cart) {
-        customerId.setText(id);
+        if(!isTest) customerId.setText(id);
         loadData(cart);
     }
 
     public void loadData(Cart cart) {
-        table.getItems().clear();
-        name.setCellValueFactory(new PropertyValueFactory<ProductTableParameters, String>("name"));
-        type.setCellValueFactory(new PropertyValueFactory<ProductTableParameters, String>("type"));
-        quantity.setCellValueFactory(new PropertyValueFactory<ProductTableParameters, String>("quantity"));
-        warranty.setCellValueFactory(new PropertyValueFactory<ProductTableParameters, String>("warranty"));
-        price.setCellValueFactory(new PropertyValueFactory<ProductTableParameters, String>("price"));
+        if(!isTest) {
+            table.getItems().clear();
+            name.setCellValueFactory(new PropertyValueFactory<ProductTableParameters, String>("name"));
+            type.setCellValueFactory(new PropertyValueFactory<ProductTableParameters, String>("type"));
+            quantity.setCellValueFactory(new PropertyValueFactory<ProductTableParameters, String>("quantity"));
+            warranty.setCellValueFactory(new PropertyValueFactory<ProductTableParameters, String>("warranty"));
+            price.setCellValueFactory(new PropertyValueFactory<ProductTableParameters, String>("price"));
 
-        if (cart == null) {
-            Customer customer = hibernateCustomer.getCustomer(customerId.getText());
-            cart = getLastCart(customer);
+            if (cart == null) {
+                Customer customer = hibernateCustomer.getCustomer(customerId.getText());
+                cart = getLastCart(customer);
+            }
         }
         if (cart == null) return;
         if (cart.getProducts() == null) return;
 
-        status.setText(cart.getStatus());
-        double total = 0;
+        if(!isTest) status.setText(cart.getStatus());
 
+        double total = calculateTotal(new ArrayList<>(cart.getProducts()));
         List<Product> products = cart.getProducts();
-        int n = products.size();
-        while (n > 0) {
-            int quant = 1;
-            Product product = products.get(0);
-            products.remove(0);
-            n--;
-            for (int j = 0; j < n; j++) {
-                if (product.getName().equals(products.get(j).getName())
-                        && product.getType().equals(products.get(j).getType())) {
-                    quant++;
-                    products.remove(j);
-                    n--;
-                    j--;
-                }
-            }
-            total += product.getPrice() * quant;
+        List<Double> productPrices = calculateItemPrices(new ArrayList<>(cart.getProducts()));
+        List<Integer> productQuantities = calculateQuantities(new ArrayList<>(cart.getProducts()));
+        int n = productPrices.size();
+        for (int i = 0; i < n; i++) {
+            Product product = products.get(i);
 
             ProductTableParameters productTableParameters = new ProductTableParameters(
                     Integer.toString(product.getId()),
                     product.getName(),
                     product.getType(),
-                    Integer.toString(quant),
+                    Integer.toString(productQuantities.get(i)),
                     Integer.toString(product.getWarrantyYears()),
-                    Double.toString(Math.round(product.getPrice() * quant * 100.0) / 100.0));
+                    Double.toString(productPrices.get(i)));
 
             data.add(productTableParameters);
         }
-        table.setItems(data);
+        if(!isTest) table.setItems(data);
 
-        total = Math.round(total * 100.0) / 100.0;
         cart.setPrice(total);
-        cart.updateCart(hibernateCart);
-        totalPrice.setText(Double.toString(total));
+        if(!isTest) cart.updateCart(hibernateCart);
+        if(!isTest) totalPrice.setText(Double.toString(total));
     }
 
     public Cart getLastCart(Customer customer) {
@@ -116,16 +111,12 @@ public class CartController implements Initializable {
 
     public void removeItem(ActionEvent actionEvent) {
         if (!status.getText().equals("open")) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("- items can be removed only when order status is: open");
-            alert.show();
+            showAlert("- items can be removed only when order status is: open", Alert.AlertType.ERROR);
             return;
         }
         ProductTableParameters p = table.getSelectionModel().getSelectedItem();
         if (p == null) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("- no item selected");
-            alert.show();
+            showAlert("- no item selected", Alert.AlertType.ERROR);
             return;
         }
         Product product = hibernateProduct.getProduct(Integer.parseInt(p.getId()));
@@ -143,35 +134,25 @@ public class CartController implements Initializable {
             totalPrice.setText("-");
             loadData(null);
 
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setContentText("Order canceled successfully");
-            alert.show();
+            showAlert("Order canceled successfully", Alert.AlertType.INFORMATION);
         }
         else {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("- order can be canceled only when order status is: open");
-            alert.show();
+            showAlert("- order can be canceled only when order status is: open", Alert.AlertType.ERROR);
         }
     }
 
     public void checkout(ActionEvent actionEvent) {
         if (!status.getText().equals("open")) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("- order can be purchased only when order status is: open");
-            alert.show();
+            showAlert("- order can be purchased only when order status is: open", Alert.AlertType.ERROR);
             return;
         }
         if (totalPrice.getText().equals("0.0")) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("- no items in this order");
-            alert.show();
+            showAlert("- no items in this order", Alert.AlertType.ERROR);
             return;
         }
         Customer customer = hibernateCustomer.getCustomer(customerId.getText());
         if (customer.getCardNo().isEmpty()) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("- no card number found\nPlease add card number in Account -> Settings");
-            alert.show();
+            showAlert("- no card number found\nPlease add card number in Account -> Settings", Alert.AlertType.ERROR);
             return;
         }
         Cart cart = getLastCart(customer);
@@ -179,9 +160,7 @@ public class CartController implements Initializable {
         cart.updateCart(hibernateCart);
         loadData(cart);
 
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setContentText("Order purchased successfully");
-        alert.show();
+        showAlert("Order purchased successfully", Alert.AlertType.INFORMATION);
     }
 
     public void openMainWindow(ActionEvent actionEvent) throws IOException {
@@ -236,5 +215,11 @@ public class CartController implements Initializable {
     public void closeStage() {
         Stage stage = (Stage) status.getScene().getWindow();
         stage.close();
+    }
+
+    private void showAlert(String message, Alert.AlertType type) {
+        Alert alert = new Alert(type);
+        alert.setContentText(message);
+        alert.show();
     }
 }
