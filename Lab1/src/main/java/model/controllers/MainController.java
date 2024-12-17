@@ -47,40 +47,63 @@ public class MainController implements Initializable {
         hibernateProduct.create(product);
     }
 
+
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        initializeTypesComboBox(); // Užpildomas kategorijų sąrašas
+        initializeTableColumns(); // Nustatomi lentelės stulpeliai
+        loadTable("All", 0.0, 999999.99); // Užkraunami visi produktai
+    }
+
+    private void initializeTypesComboBox() {
         types.getItems().addAll("All", "Bike", "Brakes", "Fork", "Frame", "Handlebars", "Pedals", "Shock", "Wheels");
-        loadTable("All", 0.0, 999999.99);
     }
     public void initData(String id) {
         customerId.setText(id);
     }
 
+    private void initializeTableColumns() {
+        name.setCellValueFactory(new PropertyValueFactory<>("name"));
+        type.setCellValueFactory(new PropertyValueFactory<>("type"));
+        quantity.setCellValueFactory(new PropertyValueFactory<>("quantity"));
+        warranty.setCellValueFactory(new PropertyValueFactory<>("warranty"));
+        price.setCellValueFactory(new PropertyValueFactory<>("price"));
+    }
+
     public void loadTable(String productType, double min, double max) {
-        table.getItems().clear();
-        name.setCellValueFactory(new PropertyValueFactory<ProductTableParameters, String>("name"));
-        type.setCellValueFactory(new PropertyValueFactory<ProductTableParameters, String>("type"));
-        quantity.setCellValueFactory(new PropertyValueFactory<ProductTableParameters, String>("quantity"));
-        warranty.setCellValueFactory(new PropertyValueFactory<ProductTableParameters, String>("warranty"));
-        price.setCellValueFactory(new PropertyValueFactory<ProductTableParameters, String>("price"));
+        table.getItems().clear(); // Išvaloma lentelė
+        data.setAll(fetchFilteredProducts(productType, min, max)); // Užpildoma naujais duomenimis
+        table.setItems(data);
+    }
+
+    private ObservableList<ProductTableParameters> fetchFilteredProducts(String productType, double min, double max) {
+        ObservableList<ProductTableParameters> filteredData = FXCollections.observableArrayList();
 
         for (Product product : hibernateProduct.getAllProducts()) {
-            if ((productType.equals("All") || productType.equals(product.getType()))
-                    && product.getPrice() >= min && product.getPrice() <= max
-                    && product.getCart() == null) {
-
-                ProductTableParameters productTableParameters = new ProductTableParameters(
-                        Integer.toString(product.getId()),
-                        product.getName(),
-                        product.getType(),
-                        "inf",
-                        Integer.toString(product.getWarrantyYears()),
-                        Double.toString(product.getPrice()));
-
-                data.add(productTableParameters);
+            if (isValidProduct(product, productType, min, max)) {
+                filteredData.add(mapProductToTableParameters(product));
             }
         }
-        table.setItems(data);
+        return filteredData;
+    }
+
+    private boolean isValidProduct(Product product, String productType, double min, double max) {
+        return (productType.equals("All") || productType.equals(product.getType())) &&
+                product.getPrice() >= min &&
+                product.getPrice() <= max &&
+                product.getCart() == null;
+    }
+
+    private ProductTableParameters mapProductToTableParameters(Product product) {
+        return new ProductTableParameters(
+                Integer.toString(product.getId()),
+                product.getName(),
+                product.getType(),
+                "inf",
+                Integer.toString(product.getWarrantyYears()),
+                Double.toString(product.getPrice())
+        );
     }
 
     public void addToCart(ActionEvent actionEvent) {
