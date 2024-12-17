@@ -39,6 +39,9 @@ public class Customer extends User {
         this.cartList = cartList;
     }
 
+    public Customer(String number, String johnDoe) {
+    }
+
     public String getCardNo() {
         return cardNo;
     }
