@@ -78,7 +78,6 @@ public class CartController implements Initializable {
 
         if(!isTest) status.setText(cart.getStatus());
 
-        double total = calculateTotal(new ArrayList<>(cart.getProducts()));
         List<Product> products = cart.getProducts();
         List<Double> productPrices = calculateItemPrices(new ArrayList<>(cart.getProducts()));
         List<Integer> productQuantities = calculateQuantities(new ArrayList<>(cart.getProducts()));
@@ -98,6 +97,7 @@ public class CartController implements Initializable {
         }
         if(!isTest) table.setItems(data);
 
+        double total = calculateTotal(new ArrayList<>(cart.getProducts()));
         cart.setPrice(total);
         if(!isTest) cart.updateCart(hibernateCart);
         if(!isTest) totalPrice.setText(Double.toString(total));

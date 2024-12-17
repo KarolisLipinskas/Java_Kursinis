@@ -5,6 +5,7 @@ import static start.Main.isTest;
 
 import model.controllers.CartController;
 import model.entities.Cart;
+import model.entities.Customer;
 import model.entities.Product;
 import org.junit.Before;
 import org.junit.Test;
@@ -94,5 +95,51 @@ public class CartControllerTest {
 
         // Verify total price calculation
         assertEquals(650.48, mockCart.getPrice(), 0.00001);
+    }
+
+    @Test
+    public void testGetLastCart_CartListIsNull() {
+        // Arrange
+        Customer customer = new Customer();
+        customer.setCartList(null);
+
+        // Act
+        Cart result = cartController.getLastCart(customer);
+
+        // Assert
+        assertNull("Expected null when cart list is null.", result);
+    }
+
+    @Test
+    public void testGetLastCart_CartListIsEmpty() {
+        // Arrange
+        Customer customer = new Customer();
+        customer.setCartList(new ArrayList<>());
+
+        // Act
+        Cart result = cartController.getLastCart(customer);
+
+        // Assert
+        assertNull("Expected null when cart list is empty.", result);
+    }
+
+    @Test
+    public void testGetLastCart_CartListHasCarts() {
+        // Arrange
+        Customer customer = new Customer();
+        List<Cart> cartList = new ArrayList<>();
+        Cart cart1 = new Cart();
+        Cart cart2 = mockCart;
+
+        cartList.add(cart1);
+        cartList.add(cart2);
+        customer.setCartList(cartList);
+
+        // Act
+        Cart result = cartController.getLastCart(customer);
+
+        // Assert
+        assertNotNull("Expected a non-null cart.", result);
+        assertEquals("Expected the last cart to be returned.", cart2, result);
     }
 }
