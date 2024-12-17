@@ -7,6 +7,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import model.Utils.CustomerValidator;
 import model.entities.Customer;
 import model.HibernateCustomer;
 import model.HibernateManager;
@@ -40,7 +41,9 @@ public class LoginController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) { }
 
     public void createNewCustomer() {
-        if (!checkInput()) return;
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+
         Customer customer = new Customer(
                 registerName.getText(),
                 registerPass.getText(),
@@ -50,94 +53,12 @@ public class LoginController implements Initializable {
                 LocalDate.parse(birthdate.getText()),
                 cardNo.getText());
 
-        hibernateCustomer.create(customer);
-
-        registerName.clear();
-        registerPass.clear();
-        registerPassR.clear();
-        name.clear();
-        surname.clear();
-        gmail.clear();
-        birthdate.clear();
-        cardNo.clear();
-
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setContentText("Account created");
-        alert.show();
-    }
-
-    private boolean checkInput() {
-        boolean check = true;
-        String alertText = "";
-
-        if (registerName.getText().isEmpty()) {   //nickname check
-            check = false;
-            alertText += "- no nickname\n";
-        }
-        else {
-            for (Customer customer : hibernateCustomer.getAllCustomers()) {
-                if (registerName.getText().equals(customer.getUsername())) {
-                    check = false;
-                    alertText += "- nickname already exist\n";
-                    break;
-                }
-            }
-        }
-
-        if (registerPass.getText().isEmpty()) {    //password check
-            check = false;
-            alertText += "- no password\n";
-        }
-        if (registerPassR.getText().isEmpty()) {
-            check = false;
-            alertText += "- no repeat password\n";
-        }
-        if (!registerPass.getText().isEmpty() && !registerPassR.getText().isEmpty() && !registerPass.getText().equals(registerPassR.getText())) {
-            check = false;
-            alertText += "- passwords do not mach\n";
-        }
-
-        if (name.getText().isEmpty()) { //name check
-            check = false;
-            alertText += "- no name\n";
-        }
-
-        if (surname.getText().isEmpty()) { //surname check
-            check = false;
-            alertText += "- no surname\n";
-        }
-
-        if (gmail.getText().isEmpty()) {  //gmail check
-            check = false;
-            alertText += "- no gmail\n";
-        }
-        else if (!Pattern.matches(".+@.+\\..+", gmail.getText())) {
-            check = false;
-            alertText += "- wrong gmail\n";
-        }
-
-        if (birthdate.getText().isEmpty()) {   //birthdate check
-            check = false;
-            alertText += "- no birthdate\n";
-        }
-        else if (!Pattern.matches("[0-9]{4}-[0-9]{2}-[0-9]{2}", birthdate.getText())) {
-            check = false;
-            alertText += "- wrong date\n";
-        }
-
-        if (!cardNo.getText().isEmpty() && !Pattern.matches("[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{4}", cardNo.getText())) {  //cardNo check
-            check = false;
-            alertText += "- wrong cardNo\n";
-        }
-
-        //Error alert
-        if(!check) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText(alertText);
+        if (CustomerValidator.validate(customer, registerPassR.getText())) {
+            hibernateCustomer.create(customer);
+            FormUtils.clearFields(registerName, registerPass, registerPassR, name, surname, gmail, birthdate, cardNo);
+            alert.setContentText("Account created");
             alert.show();
         }
-
-        return check;
     }
 
     public void login(ActionEvent actionEvent) throws IOException {

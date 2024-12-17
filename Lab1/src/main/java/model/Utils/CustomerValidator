@@ -1,0 +1,44 @@
+package model.Utils;
+
+import javafx.scene.control.Alert;
+import model.entities.Customer;
+
+import java.util.regex.Pattern;
+
+public class CustomerValidator {
+    public static boolean validate(Customer customer, String repeatPassword) {
+        StringBuilder alertText = new StringBuilder();
+        boolean isValid = true;
+
+        if (customer.getUsername().isEmpty()) {
+            isValid = false;
+            alertText.append("- no nickname\n");
+        }
+
+        if (customer.getPassword().isEmpty() || repeatPassword.isEmpty()) {
+            isValid = false;
+            alertText.append("- no password or repeat password\n");
+        } else if (!customer.getPassword().equals(repeatPassword)) {
+            isValid = false;
+            alertText.append("- passwords do not match\n");
+        }
+
+        if (customer.getGmail().isEmpty() || !Pattern.matches(".+@.+\\..+", customer.getGmail())) {
+            isValid = false;
+            alertText.append("- invalid email\n");
+        }
+
+        if (customer.getBirthDate() == null) {
+            isValid = false;
+            alertText.append("- invalid birthdate\n");
+        }
+
+        if (!isValid) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText(alertText.toString());
+            alert.show();
+        }
+
+        return isValid;
+    }
+}
