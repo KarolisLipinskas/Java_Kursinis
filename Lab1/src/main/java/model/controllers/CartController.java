@@ -26,8 +26,10 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.function.Consumer;
 
 import static model.Calculations.CartCalculation.*;
+import static model.Constants.*;
 import static start.Main.isTest;
 
 public class CartController implements Initializable {
@@ -43,7 +45,7 @@ public class CartController implements Initializable {
 
     public Label customerId;
 
-    EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("kl_kursinis");
+    EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
     HibernateCustomer hibernateCustomer = new HibernateCustomer(entityManagerFactory);
     HibernateProduct hibernateProduct = new HibernateProduct(entityManagerFactory);
     HibernateCart hibernateCart = new HibernateCart(entityManagerFactory);
@@ -61,12 +63,7 @@ public class CartController implements Initializable {
 
     public void loadData(Cart cart) {
         if(!isTest) {
-            table.getItems().clear();
-            name.setCellValueFactory(new PropertyValueFactory<ProductTableParameters, String>("name"));
-            type.setCellValueFactory(new PropertyValueFactory<ProductTableParameters, String>("type"));
-            quantity.setCellValueFactory(new PropertyValueFactory<ProductTableParameters, String>("quantity"));
-            warranty.setCellValueFactory(new PropertyValueFactory<ProductTableParameters, String>("warranty"));
-            price.setCellValueFactory(new PropertyValueFactory<ProductTableParameters, String>("price"));
+            setupTableColumns();
 
             if (cart == null) {
                 Customer customer = hibernateCustomer.getCustomer(customerId.getText());
@@ -84,16 +81,7 @@ public class CartController implements Initializable {
         int n = productPrices.size();
         for (int i = 0; i < n; i++) {
             Product product = products.get(i);
-
-            ProductTableParameters productTableParameters = new ProductTableParameters(
-                    Integer.toString(product.getId()),
-                    product.getName(),
-                    product.getType(),
-                    Integer.toString(productQuantities.get(i)),
-                    Integer.toString(product.getWarrantyYears()),
-                    Double.toString(productPrices.get(i)));
-
-            data.add(productTableParameters);
+            addToData(product, productQuantities.get(i), productPrices.get(i));
         }
         if(!isTest) table.setItems(data);
 
@@ -103,6 +91,27 @@ public class CartController implements Initializable {
         if(!isTest) totalPrice.setText(Double.toString(total));
     }
 
+    private void setupTableColumns() {
+        table.getItems().clear();
+        name.setCellValueFactory(new PropertyValueFactory<ProductTableParameters, String>(NAME_COLUMN));
+        type.setCellValueFactory(new PropertyValueFactory<ProductTableParameters, String>(TYPE_COLUMN));
+        quantity.setCellValueFactory(new PropertyValueFactory<ProductTableParameters, String>(QUANTITY_COLUMN));
+        warranty.setCellValueFactory(new PropertyValueFactory<ProductTableParameters, String>(WARRANTY_COLUMN));
+        price.setCellValueFactory(new PropertyValueFactory<ProductTableParameters, String>(PRICE_COLUMN));
+    }
+
+    private void addToData(Product product, Integer quantity, Double price) {
+        ProductTableParameters productTableParameters = new ProductTableParameters(
+                Integer.toString(product.getId()),
+                product.getName(),
+                product.getType(),
+                Integer.toString(quantity),
+                Integer.toString(product.getWarrantyYears()),
+                Double.toString(price));
+
+        data.add(productTableParameters);
+    }
+
     public Cart getLastCart(Customer customer) {
         if (customer.getCartList() == null) return null;
         if (customer.getCartList().isEmpty()) return null;
@@ -110,7 +119,7 @@ public class CartController implements Initializable {
     }
 
     public void removeItem(ActionEvent actionEvent) {
-        if (!status.getText().equals("open")) {
+        if (!status.getText().equals(STATUS_OPEN)) {
             showAlert("- items can be removed only when order status is: open", Alert.AlertType.ERROR);
             return;
         }
@@ -125,7 +134,7 @@ public class CartController implements Initializable {
     }
 
     public void cancelOrder(ActionEvent actionEvent) {
-        if (status.getText().equals("open")) {
+        if (status.getText().equals(STATUS_OPEN)) {
             Customer customer = hibernateCustomer.getCustomer(customerId.getText());
             Cart cart = getLastCart(customer);
             cart.removeCart(hibernateCart, hibernateProduct);
@@ -142,11 +151,11 @@ public class CartController implements Initializable {
     }
 
     public void checkout(ActionEvent actionEvent) {
-        if (!status.getText().equals("open")) {
+        if (!status.getText().equals(STATUS_OPEN)) {
             showAlert("- order can be purchased only when order status is: open", Alert.AlertType.ERROR);
             return;
         }
-        if (totalPrice.getText().equals("0.0")) {
+        if (totalPrice.getText().equals(ZERO_PRICE)) {
             showAlert("- no items in this order", Alert.AlertType.ERROR);
             return;
         }
@@ -156,7 +165,7 @@ public class CartController implements Initializable {
             return;
         }
         Cart cart = getLastCart(customer);
-        cart.setStatus("Paid");
+        cart.setStatus(STATUS_PAID);
         cart.updateCart(hibernateCart);
         loadData(cart);
 
@@ -164,44 +173,25 @@ public class CartController implements Initializable {
     }
 
     public void openMainWindow(ActionEvent actionEvent) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxml/main.fxml"));
-        Stage mainWindow = getStage(loader, "Main page");
-
-        MainController mainController = loader.getController();
-        mainController.initData(customerId.getText());
-
-        mainWindow.show();
-        closeStage();
+        openWindow(MAIN_PAGE_PATH, MAIN_PAGE, controller -> {
+            ((MainController) controller).initData(customerId.getText());
+        });
     }
 
     public void openSettingsWindow(ActionEvent actionEvent) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxml/settings.fxml"));
-        Stage settingsWindow = getStage(loader, "Settings page");
-
-        SettingsController settingsController = loader.getController();
-        settingsController.initData(customerId.getText());
-
-        settingsWindow.show();
-        closeStage();
+        openWindow(SETTINGS_PAGE_PATH, SETTINGS_PAGE, controller -> {
+            ((SettingsController) controller).initData(customerId.getText());
+        });
     }
 
     public void openOrderListWindow(ActionEvent actionEvent) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxml/orderList.fxml"));
-        Stage orderListWindow = getStage(loader, "Order history page");
-
-        OrderListController orderListController = loader.getController();
-        orderListController.initData(customerId.getText());
-
-        orderListWindow.show();
-        closeStage();
+        openWindow(ORDER_HISTORY_PAGE_PATH, ORDER_HISTORY_PAGE, controller -> {
+            ((OrderListController) controller).initData(customerId.getText());
+        });
     }
 
     public void logout(ActionEvent actionEvent) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxml/login.fxml"));
-        Stage cartWindow = getStage(loader, "Login screen");
-
-        cartWindow.show();
-        closeStage();
+        openWindow(LOGIN_PAGE_PATH, LOGIN_PAGE, controller -> {});
     }
 
     public Stage getStage(FXMLLoader loader ,String title) throws IOException {
@@ -221,5 +211,13 @@ public class CartController implements Initializable {
         Alert alert = new Alert(type);
         alert.setContentText(message);
         alert.show();
+    }
+
+    private void openWindow(String fxmlPath, String title, Consumer<Object> controllerInitializer) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
+        Stage window = getStage(loader, title);
+        controllerInitializer.accept(loader.getController());
+        window.show();
+        closeStage();
     }
 }
