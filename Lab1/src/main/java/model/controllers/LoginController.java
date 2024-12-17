@@ -55,14 +55,7 @@ public class LoginController implements Initializable {
 
         if (CustomerValidator.validate(customer, registerPassR.getText())) {
             hibernateCustomer.create(customer);
-            registerName.clear();
-            registerPass.clear();
-            registerPassR.clear();
-            name.clear();
-            surname.clear();
-            gmail.clear();
-            birthdate.clear();
-            cardNo.clear();
+            FormUtils.clearFields(registerName, registerPass, registerPassR, name, surname, gmail, birthdate, cardNo);
             alert.setContentText("Account created");
             alert.show();
         }
