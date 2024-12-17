@@ -38,9 +38,9 @@ public class SettingsController implements Initializable {
     public Label customerId;
 
     EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("kl_kursinis");
-    HibernateCustomer hibernateCustomer = new HibernateCustomer(entityManagerFactory);
-    HibernateCart hibernateCart = new HibernateCart(entityManagerFactory);
-    HibernateProduct hibernateProduct = new HibernateProduct(entityManagerFactory);
+    public HibernateCustomer hibernateCustomer = new HibernateCustomer(entityManagerFactory);
+    public HibernateCart hibernateCart = new HibernateCart(entityManagerFactory);
+    public HibernateProduct hibernateProduct = new HibernateProduct(entityManagerFactory);
 
     List<Stage> tempWindows = new ArrayList<>();
 

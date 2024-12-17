@@ -33,14 +33,14 @@ public class MainController implements Initializable {
     public TableColumn<ProductTableParameters, String> quantity;
     public TableColumn<ProductTableParameters, String> warranty;
     public TableColumn<ProductTableParameters, String> price;
-    private ObservableList<ProductTableParameters> data = FXCollections.observableArrayList();
+    public ObservableList<ProductTableParameters> data = FXCollections.observableArrayList();
 
     public Label customerId;
 
     EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("kl_kursinis");
-    HibernateProduct hibernateProduct = new HibernateProduct(entityManagerFactory);
-    HibernateCustomer hibernateCustomer = new HibernateCustomer(entityManagerFactory);
-    HibernateCart hibernateCart = new HibernateCart(entityManagerFactory);
+    public HibernateProduct hibernateProduct = new HibernateProduct(entityManagerFactory);
+    public HibernateCustomer hibernateCustomer = new HibernateCustomer(entityManagerFactory);
+    public HibernateCart hibernateCart = new HibernateCart(entityManagerFactory);
 
     public void createNewProduct() { //perkelti i manager screen
         Product product = new Product("Bike v1", "Bike", 70.99, 3);
