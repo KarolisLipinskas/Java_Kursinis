@@ -84,42 +84,58 @@ public class MainController implements Initializable {
     }
 
     public void addToCart(ActionEvent actionEvent) {
-        if (quantityField.getText().isEmpty() || !Pattern.matches("[0-9]*", quantityField.getText()) || quantityField.getText().equals("0")) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("- wrong quantity input");
-            alert.show();
+        if (!isValidQuantityInput()) {
+            showAlert(Alert.AlertType.ERROR, "- wrong quantity input");
             return;
         }
 
-        ProductTableParameters p = table.getSelectionModel().getSelectedItem();
-        if (p == null) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("- no item selected");
-            alert.show();
+        ProductTableParameters selectedProduct = table.getSelectionModel().getSelectedItem();
+        if (selectedProduct == null) {
+            showAlert(Alert.AlertType.ERROR, "- no item selected");
             return;
         }
 
-        Product product = hibernateProduct.getProduct(Integer.parseInt(p.getId()));
-        int quant = Integer.parseInt(quantityField.getText());
+        try {
+            processAddToCart(selectedProduct);
+            showAlert(Alert.AlertType.INFORMATION, "Item/s added to cart");
+        } catch (Exception e) {
+            showAlert(Alert.AlertType.ERROR, "Error adding items to cart: " + e.getMessage());
+        }
+    }
 
+    private boolean isValidQuantityInput() {
+        String quantityText = quantityField.getText();
+        return !quantityText.isEmpty() && Pattern.matches("[0-9]+", quantityText) && !quantityText.equals("0");
+    }
+
+    private void processAddToCart(ProductTableParameters selectedProduct) {
+        Product product = hibernateProduct.getProduct(Integer.parseInt(selectedProduct.getId()));
+        int quantity = Integer.parseInt(quantityField.getText());
+
+        Cart cart = ensureOpenCart();
+        addProductsToCart(cart, product, quantity);
+    }
+
+    private Cart ensureOpenCart() {
         Customer customer = hibernateCustomer.getCustomer(customerId.getText());
         Cart cart = getOpenCart(customer);
         if (cart == null) {
-            Cart newCart = new Cart("open", customer);
-            hibernateCart.create(newCart);
+            cart = new Cart("open", customer);
+            hibernateCart.create(cart);
         }
+        return getOpenCart(hibernateCustomer.getCustomer(customerId.getText()));
+    }
 
-        customer = hibernateCustomer.getCustomer(customerId.getText());
-        cart = getOpenCart(customer);
-
-        for (int i = 0; i < quant; i++) {
+    private void addProductsToCart(Cart cart, Product product, int quantity) {
+        for (int i = 0; i < quantity; i++) {
             cart.addProduct(product);
-            //hibernateCart.update(cart);
-            hibernateProduct.create(new Product(product, cart));
+            hibernateProduct.create(new Product(product, cart)); // Sukuriamas produkto „klonas“
         }
+    }
 
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setContentText("Item/s added to cart");
+    private void showAlert(Alert.AlertType alertType, String message) {
+        Alert alert = new Alert(alertType);
+        alert.setContentText(message);
         alert.show();
     }
     public Cart getOpenCart(Customer customer) {
